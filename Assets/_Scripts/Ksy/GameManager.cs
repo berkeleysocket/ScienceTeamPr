@@ -8,13 +8,14 @@ namespace KSY_Manager
     public class GameManager : MonoSingleton<GameManager>
     {
         [Header("Create Tiles")]
-        [SerializeField] private Tile[] TilePrefabs;
+        [SerializeField] private Tile[] Tiles = new Tile[25];
 
         //게임 시작 이벤트
         public event Action GameStarted;
 
         //게임의 타일들을 관리하는 타일 매니저
-        private TileManager _tileManager;
+        public TileManager TileManager { get; private set; }
+        public InputManager InputManager { get; private set; }
 
         private void Awake()
         {
@@ -27,19 +28,12 @@ namespace KSY_Manager
         }
         private void Init()
         {
-            _tileManager = new TileManager();
+            TileManager = new TileManager();
+            InputManager = gameObject.AddComponent<InputManager>();
         }
         private void InitGame()
         {
-            foreach (Tile element in TilePrefabs)
-            {
-                Tile tile = Instantiate(element);
-
-                sbyte x = tile.InitX;
-                sbyte y = tile.InitY;
-
-                _tileManager.SetObject(x, y, tile);
-            }
+            TileManager.StartSet(Tiles);
         }
     }
 }
