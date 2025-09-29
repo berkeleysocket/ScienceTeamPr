@@ -38,4 +38,3 @@ namespace KSY_Manager
         }
     }
 }
-
