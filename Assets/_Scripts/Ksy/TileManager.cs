@@ -25,6 +25,7 @@ namespace KSY_Manager
                 if (Map[rowIndex,columnIndex] != null)
                 {
                     Debug.LogError("동일한 위치에 있는 타일이 있습니다.");
+                    return;
                 }
 
                 SetObject(rowIndex, columnIndex, tile);
@@ -45,7 +46,7 @@ namespace KSY_Manager
                 }
                 else
                 {
-                    Debug.Log("할당 실패 : 해당 좌표에 다른 오브젝트가 존재합니다.");
+                    Debug.LogError("할당 실패 : 해당 좌표에 다른 오브젝트가 존재합니다.");
                     return;
                 }
             }

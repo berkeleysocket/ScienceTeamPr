@@ -19,8 +19,6 @@ namespace KSY_Tile
         #endregion
         public virtual bool Magnetization(sbyte xDir, sbyte yDir, Tile presser)
         {
-            Debug.Log("자화 현상");
-            Debug.Log($"{gameObject.name} : {xDir} , {yDir}");
             return Move(xDir, yDir);
         }
         protected virtual bool Move(sbyte xDir, sbyte yDir)
