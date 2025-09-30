@@ -14,7 +14,7 @@ namespace KSY_Tile
         #region UnityEngine
         private void OnValidate()
         {
-            transform.position = new Vector2(InitX, InitY);
+            transform.position = new Vector2((float)InitX + 0.5f, (float)InitY + 0.5f);
         }
         #endregion
         public virtual bool Magnetization(sbyte xDir, sbyte yDir, Tile presser)

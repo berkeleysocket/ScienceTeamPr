@@ -36,9 +36,18 @@ namespace KSY_Manager
             {
                 sbyte lastRowIndex = obj.CurrentX;
                 sbyte lastColumIndex = obj.CurrentY;
+
                 Map[lastRowIndex, lastColumIndex] = null;
-                Map[rowIndex, columnIndex] = obj;
-                UpdatePos(rowIndex, columnIndex, obj);
+                if(Map[rowIndex, columnIndex] == null)
+                {
+                    Map[rowIndex, columnIndex] = obj;
+                    UpdatePos(rowIndex, columnIndex, obj);
+                }
+                else
+                {
+                    Debug.Log("할당 실패 : 해당 좌표에 다른 오브젝트가 존재합니다.");
+                    return;
+                }
             }
             else
             {
@@ -55,7 +64,7 @@ namespace KSY_Manager
         #region private
         private void UpdatePos(sbyte x, sbyte y, Tile obj)
         {
-            obj.transform.position = new Vector2(x, y);
+            obj.transform.position = new Vector2(x + 0.5f, y + 0.5f);
         }
         #endregion
 
