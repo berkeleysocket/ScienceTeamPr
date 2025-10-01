@@ -1,9 +1,9 @@
-using KSY_Manager;
+using KSY.Manager;
 using UnityEngine;
 
-namespace KSY_Tile
+namespace KSY.Tile
 {
-    public abstract class Tile : MonoBehaviour
+    public abstract class TileObject : MonoBehaviour
     {
         [field: SerializeField] public sbyte InitX { get; private set; } = 0;
         [field: SerializeField] public sbyte InitY { get; private set; } = 0;
@@ -17,10 +17,7 @@ namespace KSY_Tile
             transform.position = new Vector2((float)InitX + 0.5f, (float)InitY + 0.5f);
         }
         #endregion
-        public virtual bool Magnetization(sbyte xDir, sbyte yDir, Tile presser)
-        {
-            return Move(xDir, yDir);
-        }
+        public abstract void Magnetization(sbyte xDir, sbyte yDir, TileObject presser);
         protected virtual bool Move(sbyte xDir, sbyte yDir)
         {
             int _x = CurrentX + xDir;
@@ -33,7 +30,7 @@ namespace KSY_Tile
             if (!TileManager.InMap(x, y)) { return false; }
 
             //해당 좌표에 다른 타일이 있는지 확인하기.
-            Tile? destinationTile = GameManager.Instance.TileManager.GetObject(x, y);
+            TileObject? destinationTile = GameManager.Instance.TileManager.GetObject(x, y);
 
             //만약 타일이 없다면 해당 좌표로 이동시키기.
             if (destinationTile == null)

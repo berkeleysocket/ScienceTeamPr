@@ -1,7 +1,7 @@
 using System;
 using UnityEngine;
 
-namespace KSY_Manager
+namespace KSY.Manager
 {
     public class InputManager : MonoBehaviour
     {

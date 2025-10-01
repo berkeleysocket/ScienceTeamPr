@@ -1,10 +1,10 @@
-namespace KSY_Tile
+namespace KSY.Tile
 {
-    public class Paramagnetic : Tile
+    public class Paramagnetic : TileObject
     {
-        public override bool Magnetization(sbyte xDir, sbyte yDir, Tile presser)
+        public override void Magnetization(sbyte xDir, sbyte yDir, TileObject presser)
         {
-            return base.Magnetization(xDir, yDir, this);
+
         }
     }
 }

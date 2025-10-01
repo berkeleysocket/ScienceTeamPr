@@ -1,10 +1,14 @@
-using KSY_Manager;
-using UnityEngine;
+using KSY.Manager;
 
-namespace KSY_Tile
+namespace KSY.Tile
 {
-    public class Player : Tile
+    public class Player : TileObject
     {
+        public override void Magnetization(sbyte xDir, sbyte yDir, TileObject presser)
+        {
+            throw new System.NotImplementedException();
+        }
+
         private void Start()
         {
             GameManager.Instance.InputManager.MoveKeyPressed += (x,y)=> Move(x,y);

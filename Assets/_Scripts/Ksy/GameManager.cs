@@ -1,14 +1,14 @@
 using System;
-using KSY_Pattern;
-using KSY_Tile;
+using KSY.Tile;
+using KSY.Pattern;
 using UnityEngine;
 
-namespace KSY_Manager
+namespace KSY.Manager
 {
     public class GameManager : MonoSingleton<GameManager>
     {
         [Header("Create Tiles")]
-        [SerializeField] private Tile[] Tiles = new Tile[25];
+        [SerializeField] private TileObject[] Tiles = new TileObject[25];
 
         //게임 시작 이벤트
         public event Action GameStarted;

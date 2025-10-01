@@ -1,6 +1,6 @@
 using UnityEngine;
 
-namespace KSY_Pattern
+namespace KSY.Pattern
 {
     public class MonoSingleton<T> : MonoBehaviour where T : MonoBehaviour
     {
