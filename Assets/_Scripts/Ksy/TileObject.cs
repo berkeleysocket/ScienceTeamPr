@@ -7,11 +7,16 @@ namespace KSY.Tile
     {
         [field: SerializeField] public sbyte InitX { get; private set; } = 0;
         [field: SerializeField] public sbyte InitY { get; private set; } = 0;
-        public sbyte CurrentX => (sbyte)transform.position.x;
-        public sbyte CurrentY => (sbyte)transform.position.y;
+        public sbyte CurrentX = 0;
+        public sbyte CurrentY = 0;
         [field: SerializeField] public TileType Type { get; private set; } = TileType.None;
 
         #region UnityEngine
+        private void Start()
+        {
+            CurrentX = InitX;
+            CurrentY = InitY;
+        }
         private void OnValidate()
         {
             transform.position = new Vector2((float)InitX + 0.5f, (float)InitY + 0.5f);

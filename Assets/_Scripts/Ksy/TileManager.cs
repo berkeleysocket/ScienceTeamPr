@@ -30,18 +30,28 @@ namespace KSY.Manager
                 SetObject(rowIndex, columnIndex, tile);
             }
         }
-        public void SetObject(sbyte rowIndex, sbyte columnIndex, TileObject obj)
+        public void SetObject(sbyte rowIndex, sbyte columnIndex, TileObject? obj)
         {
             if (InMap(rowIndex,columnIndex))
             {
-                sbyte lastRowIndex = obj.CurrentX;
-                sbyte lastColumIndex = obj.CurrentY;
-
-                Map[lastRowIndex, lastColumIndex] = null;
-                if(Map[rowIndex, columnIndex] == null)
+                if (obj != null)
                 {
+                    sbyte lastRowIndex = obj.CurrentX;
+                    sbyte lastColumIndex = obj.CurrentY;
+
+                    Map[lastRowIndex, lastColumIndex] = null;
+                }
+
+                if (Map[rowIndex, columnIndex] == null && obj != null)
+                {
+                    obj.CurrentX = rowIndex;
+                    obj.CurrentY = columnIndex;
                     Map[rowIndex, columnIndex] = obj;
                     UpdatePos(rowIndex, columnIndex, obj);
+                }
+                else if(obj == null)
+                {
+                    Map[rowIndex, columnIndex] = obj;
                 }
                 else
                 {
