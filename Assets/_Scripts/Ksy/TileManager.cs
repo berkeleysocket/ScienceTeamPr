@@ -7,17 +7,18 @@ namespace KSY.Manager
     {
         #region Member
         public TileObject[,] Map = new TileObject[5,5];
-        const int MAP_SIZE = 5;
         #endregion
 
         #region public
-        public void StartSet(TileObject[] tiles)
+        public void StartSet(TileObject[,] gameMap)
         {
             //예외 처리
-            if (tiles == null || tiles.Length <= 0) return;
+            if (gameMap == null || gameMap.Length <= 0) return;
 
-            foreach (TileObject tile in tiles)
+            foreach (TileObject tile in gameMap)
             {
+                if (tile == null) return;
+
                 sbyte rowIndex = tile.InitX;
                 sbyte columnIndex = tile.InitY;
 
@@ -82,7 +83,8 @@ namespace KSY.Manager
         //해당 좌표가 맵 안(배열)안에 있는 좌표인지 계산하는 함수
         public static bool InMap(sbyte rowIndex, sbyte columnIndex)
         {
-            return rowIndex >= 0 && rowIndex < MAP_SIZE && columnIndex >= 0 && columnIndex < MAP_SIZE;
+            return rowIndex >= 0 && rowIndex < GameManager.Instance.MapSizeX && 
+                columnIndex >= 0 && columnIndex < GameManager.Instance.MapSizeY;
         }
         #endregion
     }
