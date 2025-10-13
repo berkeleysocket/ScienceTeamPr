@@ -1,33 +1,88 @@
-using UnityEditor;
+using System;
+using System.Collections.Generic;
 using KSY.Manager;
+using UnityEditor;
 using UnityEngine;
-using UnityEngine.UIElements;
+
+[Serializable]
+public class Row
+{
+    public Row(sbyte colums)
+    {
+        this.colums = new GameObject[colums];   
+    }
+
+    public GameObject[] colums;
+}
+
+[Serializable]
+public class MapData
+{
+    public MapData(sbyte row = 0, sbyte colums = 0)
+    {
+        this.rows = new Row[row];
+
+        for(int g = 0; g < row; g++)
+        {
+            this.rows[g] = new Row(colums);
+        }
+    }
+
+    public Row[] rows;
+}
 
 [CustomEditor(typeof(GameManager),false)]
 public class GameManagerEditor : Editor
 {
     private GameManager reference;
-    private int old_testNum;
+    private sbyte _mapSizeX => reference.MapSizeX;
+    private sbyte _mapSizeY => reference.MapSizeY;
+    private List<MapData> _maps => reference.Maps;
+
     private void OnEnable()
     {
         reference = (GameManager)target;
-
-        //값이 변경되기전 값을 저장
-        old_testNum = reference.TestNum;
     }
     public override void OnInspectorGUI()
     {
         //bool 값을 반환하는데, 기본 GUI 컨트롤로 입력 데이터의 값을 변경한 경우 true, 그렇지 않을 경우 false를 반환한다.
         //커스텀 에디터 인터페이스말고 기본적으로 그려지는 인스펙터를 그린다.
-        //이를 이용해서 값이 바뀐게 아니라면 인스펙터를 다시 그리지 않게함.
-
-        if (!DrawDefaultInspector()) return;
+        //DrawDefaultInspector();
 
         hasUnsavedChanges = true;
 
         //그냥 DrawDefaultInspector()를 호출한다.
         base.OnInspectorGUI();
+        GUILayout.Label("");
 
+        if(GUILayout.Button("Create Map"))
+        {
+            MapData map = new MapData(_mapSizeX,_mapSizeY);
+            _maps.Add(map);
+        }
+
+        if(GUILayout.Button("Delete Map"))
+        {
+            if(_maps.Count > 0)
+                _maps.RemoveAt(_maps.Count - 1);
+        }
+
+        for(int g = 0; g < _maps.Count; g++)
+        {
+            GUILayout.Label("");
+            GUILayout.Label($"Map {g + 1}");
+            for (int h = 0; h < _mapSizeY; h++)
+            {
+                GUILayout.BeginHorizontal();
+                for (int w = 0; w < _mapSizeX; w++)
+                {
+                    GameObject field = _maps[g].rows[h].colums[w];
+                    GameObject tile = (GameObject)EditorGUILayout.ObjectField(field, typeof(GameObject), true);
+                    _maps[g].rows[h].colums[w] = tile;
+                }
+                GUILayout.EndHorizontal();
+            }
+        }
 
         //serializedObject : 직렬화된 오브젝트
         //Debug.Log(serializedObject.targetObject);
@@ -42,8 +97,6 @@ public class GameManagerEditor : Editor
         //Debug.Log(target);
         //Object 배열을 반환한다. (Object[])
         //Debug.Log(targets);
-
-        EditorGUILayout.LabelField("Map Editor");
     }
     //이 메서드를 재정의(오버라이딩)하여 저장하지 않으면 저장하라는 메세지를 보낸다. 또한 저장되지 않은 작업을 잃지 않게 한다.
     //DiscardChanges와 반대 개념으로 둘 다 오버라이딩하면 둘 다 호출되긴 하는데 결국 수정한 내용이 저장된다.
@@ -59,8 +112,5 @@ public class GameManagerEditor : Editor
     {
         base.DiscardChanges();
         Debug.LogError($"not Changed :");
-
-        //취소를 선택했다면 값이 변경되기전의 값을 복원함.
-        reference.TestNum = old_testNum;
     }
 }

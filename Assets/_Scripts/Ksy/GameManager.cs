@@ -8,13 +8,12 @@ namespace KSY.Manager
 {
     public class GameManager : MonoSingleton<GameManager>
     {
-        public int TestNum = 1;
-
+        public List<MapData> Maps = new List<MapData>();
         public GameObject[,] initMatrix;
         private TileObject[,] _tileMatrix;
 
-        public sbyte MapSizeX { get; private set; }
-        public sbyte MapSizeY { get; private set; }
+        [field: SerializeField] public sbyte MapSizeX { get; private set; } = 0;
+        [field: SerializeField] public sbyte MapSizeY { get; private set; } = 0;
 
         //게임 시작 이벤트
         public event Action GameStarted;
