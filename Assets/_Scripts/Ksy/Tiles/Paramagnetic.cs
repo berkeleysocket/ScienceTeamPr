@@ -17,7 +17,7 @@ namespace KSY.Tile
             CurrentX = otherTX;
             CurrentY = otherTY;
             presser.CurrentX = myTX;
-            presser.CurrentY = myTY;////////////
+            presser.CurrentY = myTY;
 
             GameManager.Instance.TileManager.SetObject(myTX, myTY, null);
             GameManager.Instance.TileManager.SetObject(otherTX, otherTY, null);

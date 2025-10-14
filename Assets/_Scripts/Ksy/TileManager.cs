@@ -1,58 +1,60 @@
 using KSY.Tile;
 using UnityEngine;
-
 namespace KSY.Manager
 {
     public class TileManager
     {
         #region Member
-        public TileObject[,] Map = new TileObject[5,5];
-        #endregion
-
-        #region public
-        public void StartSet(TileObject[,] gameMap)
+        public TileObject[,] Map;
+        public void SetMap(TileObject[,] gameMap)
         {
-            //예외 처리
             if (gameMap == null || gameMap.Length <= 0) return;
 
-            foreach (TileObject tile in gameMap)
+            //Map = (TileObject[,])gameMap.Clone();
+            Map = gameMap;
+        }
+        public void InitTilePos()
+        {
+            //예외 처리
+            if (Map == null || Map.Length <= 0) return;
+
+            foreach (TileObject tile in Map)
             {
-                if (tile == null) return;
+                if (tile == null)
+                {
+                    Debug.Log("return : 타일이 null입니다.");
+                    continue;
+                }
 
                 sbyte rowIndex = tile.InitX;
                 sbyte columnIndex = tile.InitY;
 
-                if (Map[rowIndex,columnIndex] != null)
-                {
-                    Debug.LogError("동일한 위치에 있는 타일이 있습니다.");
-                    return;
-                }
-
-                SetObject(rowIndex, columnIndex, tile);
+                UpdatePos(rowIndex, columnIndex, tile);
             }
         }
         public void SetObject(sbyte rowIndex, sbyte columnIndex, TileObject? obj)
         {
             if (InMap(rowIndex,columnIndex))
             {
-                if (obj != null)
+                if (Map[rowIndex, columnIndex] == null && obj != null)
                 {
                     sbyte lastRowIndex = obj.CurrentX;
                     sbyte lastColumIndex = obj.CurrentY;
 
                     Map[lastRowIndex, lastColumIndex] = null;
-                }
 
-                if (Map[rowIndex, columnIndex] == null && obj != null)
-                {
                     obj.CurrentX = rowIndex;
                     obj.CurrentY = columnIndex;
                     Map[rowIndex, columnIndex] = obj;
+
                     UpdatePos(rowIndex, columnIndex, obj);
+
+                    Debug.Log($"SetObject {obj.name} : ({rowIndex},{columnIndex})");
                 }
                 else if(obj == null)
                 {
-                    Map[rowIndex, columnIndex] = obj;
+                    Debug.LogError("할당 실패 : 해당 객체가 Null입니다.");
+                    return;
                 }
                 else
                 {
@@ -62,10 +64,11 @@ namespace KSY.Manager
             }
             else
             {
-                Debug.LogError("맵 경계를 벗어난 좌표에는 오브젝트를 할당할 수 없습니다.");
+                Debug.LogError("할당 실패 : 맵 경계를 벗어난 좌표에는 오브젝트를 할당할 수 없습니다.");
+                return;
             }
         }
-        public KSY.Tile.TileObject? GetObject(sbyte rowIndex, sbyte columnIndex)
+        public TileObject? GetObject(sbyte rowIndex, sbyte columnIndex)
         {
             TileObject? obj = Map[rowIndex, columnIndex];
             return obj;
@@ -75,7 +78,8 @@ namespace KSY.Manager
         #region private
         private void UpdatePos(sbyte x, sbyte y, TileObject obj)
         {
-            obj.transform.position = new Vector2(x + 0.5f, y + 0.5f);
+            obj.transform.position = new Vector2((float)x + 0.5f, (float)y + 0.5f);
+            Debug.Log($"<color=yellow>UpdatePos {obj.name} : ({obj.transform.position.x},{obj.transform.position.y})</color>");
         }
         #endregion
 

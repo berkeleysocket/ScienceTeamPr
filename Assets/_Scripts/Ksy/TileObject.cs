@@ -1,27 +1,74 @@
+using System.ComponentModel;
 using KSY.Manager;
 using UnityEngine;
 
 namespace KSY.Tile
 {
+    public class Target : MonoBehaviour
+    {
+
+    }
     public abstract class TileObject : MonoBehaviour
     {
-        [field: SerializeField] public sbyte InitX { get; private set; } = 0;
-        [field: SerializeField] public sbyte InitY { get; private set; } = 0;
-        public sbyte CurrentX = 0;
-        public sbyte CurrentY = 0;
-        [field: SerializeField] public TileType Type { get; private set; } = TileType.None;
+        public sbyte InitX
+        {
+            get => _initX;
+            set
+            {
+                if (value < 0) _initX = 0;
+                else if (value >= GameManager.Instance.MapSizeX) _initX = (sbyte)(GameManager.Instance.MapSizeX - 1);
+                else _initX = value;
+            }
+        }
+        private sbyte _initX;
 
-        #region UnityEngine
-        private void Start()
+        public sbyte InitY
+        {
+            get => _initY;
+            set
+            {
+                if (value < 0) _initY = 0;
+                else if (value >= GameManager.Instance.MapSizeY) _initY = (sbyte)(GameManager.Instance.MapSizeY - 1);
+                else _initY = value;
+            }
+        }
+        private sbyte _initY;
+
+        public sbyte CurrentX
+        {
+            get => _currentX;
+            set
+            {
+                if (value < 0) _currentX = 0;
+                else if (value >= GameManager.Instance.MapSizeX) _currentX = (sbyte)(GameManager.Instance.MapSizeX - 1);
+                else
+                {
+                    Debug.Log($"CurrentX : {value}");
+                    _currentX = value;
+                }
+            }
+        }
+        private sbyte _currentX;
+
+        [field: SerializeField]
+        public sbyte CurrentY
+        {
+            get => _currentY;
+            set
+            {
+                if (value < 0) _currentY = 0;
+                else if (value >= GameManager.Instance.MapSizeY) _currentY = (sbyte)(GameManager.Instance.MapSizeY - 1);
+                else _currentY = value;
+            }
+        }
+        private sbyte _currentY;
+
+        [field: SerializeField] public TileType Type { get; private set; } = TileType.None;
+        public void InitPos()
         {
             CurrentX = InitX;
             CurrentY = InitY;
         }
-        private void OnValidate()
-        {
-            transform.position = new Vector2((float)InitX + 0.5f, (float)InitY + 0.5f);
-        }
-        #endregion
         public abstract void Magnetization(sbyte xDir, sbyte yDir, TileObject presser);
         protected virtual bool Move(sbyte xDir, sbyte yDir)
         {

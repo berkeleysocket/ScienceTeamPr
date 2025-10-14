@@ -1,14 +1,19 @@
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using KSY.Pattern;
 using KSY.Tile;
+using Unity.VisualScripting;
 using UnityEngine;
 
 namespace KSY.Manager
 {
     public class GameManager : MonoSingleton<GameManager>
     {
-        public List<MapData> Maps = new List<MapData>();
+        [HideInInspector] public List<MapData> Maps = new List<MapData>();
+        [HideInInspector] public List<MapData> Targets = new List<MapData>();
+        public int CurrentMapIndex { get; private set; } = 0;
+
         public GameObject[,] initMatrix;
         private TileObject[,] _tileMatrix;
 
@@ -22,8 +27,11 @@ namespace KSY.Manager
         public TileManager TileManager { get; private set; }
         public InputManager InputManager { get; private set; }
 
+
         private void Awake()
-        { 
+        {
+            base.Awake();
+
             //GameManager Initialization
             Init();
 
@@ -37,30 +45,56 @@ namespace KSY.Manager
         }
         private void Init()
         {
-            TileManager = new TileManager();
-            InputManager = gameObject.AddComponent<InputManager>();
+            initMatrix = new GameObject[MapSizeX, MapSizeY];
+            _tileMatrix = new TileObject[MapSizeX, MapSizeY];
 
-            //Init TileMatrix
-            //인스펙터에서 맵 제작 안했으면 return
-            if (initMatrix == null || initMatrix.Length == 0) return;
-            foreach(GameObject go in initMatrix)
+            if (TileManager == null)
             {
-                //null이 아니고 TileObject가 붙어있다면 tileMatrix에 맞는 위치에 할당
-                if (go != null && go.TryGetComponent(out TileObject tileSc))
-                {
-                    sbyte x = tileSc.InitX;
-                    sbyte y = tileSc.InitY;
-                    _tileMatrix[x,y] = tileSc;
-                }
+                TileManager = new TileManager();
             }
 
-            //맵 가로 세로열 길이 저장
-            MapSizeX = (sbyte)initMatrix.GetLength(0);
-            MapSizeY = (sbyte)initMatrix.GetLength(1);
+            if (InputManager == null)
+                InputManager = gameObject.AddComponent<InputManager>();
         }
         private void InitGame()
         {
-            TileManager.StartSet(_tileMatrix);
+            if(CurrentMapIndex > -1)
+            {
+                if (Maps == null || Maps[CurrentMapIndex] == null) return;
+
+                //init initMatrix
+                MapData selectMap = Maps[CurrentMapIndex];
+
+                for(int g = MapSizeY - 1; 0 <= g ; g--)
+                {
+                    for(int h = MapSizeX - 1; 0 <= h; h--)
+                    {
+                        GameObject tile = selectMap.rows[g].colums[h];
+
+                        if(tile != null)
+                        {
+                            GameObject tileBody = Instantiate(tile);
+
+                            sbyte initY = (sbyte)(MapSizeY - 1 - g);
+                            sbyte initX = (sbyte)h;
+
+                            if (!tile.TryGetComponent(out TileObject tileSc)) return;
+
+                            Debug.Log($"{tile.name} : {initX}, {initY}");
+
+                            tileSc.InitY = initY;
+                            tileSc.InitX = initX;
+
+                            initMatrix[initX, initY] = tileBody;
+                            _tileMatrix[initX, initY] = tileSc;
+
+                            tileSc.InitPos();
+                        }
+                    }
+                }
+                TileManager.SetMap(_tileMatrix);
+                TileManager.InitTilePos();
+            }
         }
     }
 }

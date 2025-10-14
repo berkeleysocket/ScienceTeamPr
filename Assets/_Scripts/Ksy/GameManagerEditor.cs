@@ -11,7 +11,6 @@ public class Row
     {
         this.colums = new GameObject[colums];   
     }
-
     public GameObject[] colums;
 }
 
@@ -38,6 +37,7 @@ public class GameManagerEditor : Editor
     private sbyte _mapSizeX => reference.MapSizeX;
     private sbyte _mapSizeY => reference.MapSizeY;
     private List<MapData> _maps => reference.Maps;
+    private List<MapData> _targets => reference.Targets;
 
     private void OnEnable()
     {
@@ -49,7 +49,7 @@ public class GameManagerEditor : Editor
         //커스텀 에디터 인터페이스말고 기본적으로 그려지는 인스펙터를 그린다.
         //DrawDefaultInspector();
 
-        hasUnsavedChanges = true;
+        //hasUnsavedChanges = true;
 
         //그냥 DrawDefaultInspector()를 호출한다.
         base.OnInspectorGUI();
@@ -59,16 +59,22 @@ public class GameManagerEditor : Editor
         {
             MapData map = new MapData(_mapSizeX,_mapSizeY);
             _maps.Add(map);
+            _targets.Add(map);
         }
 
         if(GUILayout.Button("Delete Map"))
         {
             if(_maps.Count > 0)
                 _maps.RemoveAt(_maps.Count - 1);
+
+            if(_targets.Count > 0)
+                _targets.RemoveAt(_targets.Count - 1);
         }
 
         for(int g = 0; g < _maps.Count; g++)
         {
+            GUILayout.Label("");
+            GUILayout.Label("");
             GUILayout.Label("");
             GUILayout.Label($"Map {g + 1}");
             for (int h = 0; h < _mapSizeY; h++)
@@ -79,6 +85,20 @@ public class GameManagerEditor : Editor
                     GameObject field = _maps[g].rows[h].colums[w];
                     GameObject tile = (GameObject)EditorGUILayout.ObjectField(field, typeof(GameObject), true);
                     _maps[g].rows[h].colums[w] = tile;
+                }
+                GUILayout.EndHorizontal();
+            }
+
+            GUILayout.Label("");
+            GUILayout.Label($"Targets {g + 1}");
+            for (int h = 0; h < _mapSizeY; h++)
+            {
+                GUILayout.BeginHorizontal();
+                for (int w = 0; w < _mapSizeX; w++)
+                {
+                    GameObject field = _targets[g].rows[h].colums[w];
+                    GameObject tile = (GameObject)EditorGUILayout.ObjectField(field, typeof(GameObject), true);
+                    _targets[g].rows[h].colums[w] = tile;
                 }
                 GUILayout.EndHorizontal();
             }
