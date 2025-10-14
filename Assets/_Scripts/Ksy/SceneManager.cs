@@ -1,5 +1,7 @@
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
+using UnityEngine;
 using UnityEngine.SceneManagement;
 
 namespace KSY.Manager
@@ -9,13 +11,9 @@ namespace KSY.Manager
         //SceneType은 Build Settings의 씬 순서와 맞춰야 함
         public enum SceneType : sbyte
         {
-            Title = 0,
-            SelectMapMenu,
-            Game,
-            Clear,
-
-
-            None = -1,
+            None = 0,
+            Ksy_MainMenu,
+            Ksy_InGame,
         }
 
         //씬 로딩 시작 이벤트
@@ -66,7 +64,11 @@ namespace KSY.Manager
             if (SceneLoaded.ContainsKey(t))
                 SceneLoaded[t] += onFunction;
             else
+            {
                 SceneLoaded.Add(t, onFunction);
+
+                UnityEngine.Debug.Log($"Scene name : {t}, {onFunction}");
+            }
         }
         public void AddEvent_Exit(SceneType t, Action onFunction)
         {
@@ -82,6 +84,8 @@ namespace KSY.Manager
                 SceneExit[t] += onFunction;
             else
                 SceneExit.Add(t, onFunction);
+
+            UnityEngine.Debug.Log("asdasdasdsdd");
         }
 
         public void LoadScene(SceneType t)
@@ -108,12 +112,15 @@ namespace KSY.Manager
         #region private Methods
         private void Handle_SceneLoaded(UnityEngine.SceneManagement.Scene scene, LoadSceneMode mode)
         {
-            //이벤트 해제
-            UnityEngine.SceneManagement.SceneManager.sceneLoaded -= Handle_SceneLoaded;
-
             //씬 로드 완료 이벤트 실행
             if (SceneLoaded != null && SceneLoaded.ContainsKey(Scene_Current))
+            {
+                UnityEngine.Debug.Log($"{Scene_Current}");
                 SceneLoaded[Scene_Current]?.Invoke();
+
+                //이벤트 해제
+                UnityEngine.SceneManagement.SceneManager.sceneLoaded -= Handle_SceneLoaded;
+            }
         }
         #endregion
     }

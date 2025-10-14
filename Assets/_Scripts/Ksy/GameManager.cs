@@ -2,7 +2,6 @@ using System;
 using System.Collections.Generic;
 using KSY.Pattern;
 using KSY.Tile;
-using UnityEditor.UI;
 using UnityEngine;
 
 namespace KSY.Manager
@@ -31,12 +30,11 @@ namespace KSY.Manager
         private void Awake()
         {
             base.Awake();
-
             //GameManager Initialization
             Init();
 
             //Game Initialization
-            SettingMap(0);
+            StartInGame(0);
         }
         private void Start()
         {
@@ -58,7 +56,12 @@ namespace KSY.Manager
             if (InputManager == null)
                 InputManager = gameObject.AddComponent<InputManager>();
         }
-        private void SettingMap(int selectMapIndex)
+        public void StartInGame(sbyte MapIndex)
+        {
+            SceneManager.AddEvent_Loaded(SceneManager.SceneType.Ksy_InGame, () => SettingMap(MapIndex));
+            SceneManager.LoadScene(SceneManager.SceneType.Ksy_InGame);
+        }
+        public void SettingMap(int selectMapIndex)
         {
             this.CurrentMapIndex = selectMapIndex;
 
