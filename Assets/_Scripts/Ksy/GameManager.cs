@@ -26,6 +26,7 @@ namespace KSY.Manager
         //게임의 타일들을 관리하는 타일 매니저
         public TileManager TileManager { get; private set; }
         public InputManager InputManager { get; private set; }
+        public SceneManager SceneManager { get; private set; }
 
 
         private void Awake()
@@ -51,6 +52,11 @@ namespace KSY.Manager
             if (TileManager == null)
             {
                 TileManager = new TileManager();
+            }
+
+            if(SceneManager == null)
+            {
+                SceneManager = new SceneManager();
             }
 
             if (InputManager == null)
