@@ -32,7 +32,19 @@ namespace KSY.Manager
                 UpdatePos(rowIndex, columnIndex, tile);
             }
         }
-        public void SetObject(sbyte rowIndex, sbyte columnIndex, TileObject? obj)
+        public void SetNull(sbyte rowIndex, sbyte columIndex)
+        {
+            if (InMap(rowIndex, columIndex))
+            {
+                Map[rowIndex, columIndex] = null;
+            }
+            else
+            {
+                Debug.LogError("할당 실패 : 맵 경계를 벗어난 좌표에는 오브젝트를 할당할 수 없습니다.");
+                return;
+            }
+        }
+        public void SetObject(sbyte rowIndex, sbyte columnIndex, TileObject obj)
         {
             if (InMap(rowIndex,columnIndex))
             {
@@ -41,7 +53,10 @@ namespace KSY.Manager
                     sbyte lastRowIndex = obj.CurrentX;
                     sbyte lastColumIndex = obj.CurrentY;
 
-                    Map[lastRowIndex, lastColumIndex] = null;
+                    if(Map[lastRowIndex, lastColumIndex] != null && Map[lastRowIndex, lastColumIndex].TileID == obj.TileID)
+                    {
+                        Map[lastRowIndex, lastColumIndex] = null;
+                    }
 
                     obj.CurrentX = rowIndex;
                     obj.CurrentY = columnIndex;

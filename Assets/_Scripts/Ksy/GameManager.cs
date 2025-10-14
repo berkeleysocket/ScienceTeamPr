@@ -11,7 +11,7 @@ namespace KSY.Manager
     public class GameManager : MonoSingleton<GameManager>
     {
         [HideInInspector] public List<MapData> Maps = new List<MapData>();
-        [HideInInspector] public List<MapData> Targets = new List<MapData>();
+        [HideInInspector] public List<TargetsData> Targets = new List<TargetsData>();
         public int CurrentMapIndex { get; private set; } = 0;
 
         public GameObject[,] initMatrix;
@@ -62,6 +62,8 @@ namespace KSY.Manager
             {
                 if (Maps == null || Maps[CurrentMapIndex] == null) return;
 
+                TileObject.TileCount = 0;
+
                 //init initMatrix
                 MapData selectMap = Maps[CurrentMapIndex];
 
@@ -78,7 +80,7 @@ namespace KSY.Manager
                             sbyte initY = (sbyte)(MapSizeY - 1 - g);
                             sbyte initX = (sbyte)h;
 
-                            if (!tile.TryGetComponent(out TileObject tileSc)) return;
+                            if (!tileBody.TryGetComponent(out TileObject tileSc)) return;
 
                             Debug.Log($"{tile.name} : {initX}, {initY}");
 

@@ -10,6 +10,9 @@ namespace KSY.Tile
     }
     public abstract class TileObject : MonoBehaviour
     {
+        public static int TileCount = 0;
+        public int TileID { get; private set; } = 0;
+
         public sbyte InitX
         {
             get => _initX;
@@ -66,6 +69,8 @@ namespace KSY.Tile
         [field: SerializeField] public TileType Type { get; private set; } = TileType.None;
         public void InitPos()
         {
+            TileID = TileCount++;
+
             CurrentX = InitX;
             CurrentY = InitY;
         }
@@ -89,8 +94,8 @@ namespace KSY.Tile
             {
                 GameManager.Instance.TileManager.SetObject(x, y, this);
             }
-            //만약 타일이 있다면 자화 현상을 발동시키기.
-            else
+            //만약 타일이 있는데 벽 타일이 아니라면 자화 현상을 발동시키기.
+            else if(destinationTile.Type != TileType.Wall)
             {
                 destinationTile.Magnetization(xDir, yDir, this);
             }
@@ -105,7 +110,8 @@ namespace KSY.Tile
         Player,
         Ferromagnetic,//강자성체
         Paramagnetic,//상자성체
-        Diamagnetic//반자성체
+        Diamagnetic,//반자성체
+        Wall
     }
     #endregion
 }

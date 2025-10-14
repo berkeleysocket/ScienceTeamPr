@@ -40,10 +40,12 @@ namespace KSY.Tile
             for (int i = tilesToMove.Count - 1; i >= 0; i--)
             {
                 TileObject tile = tilesToMove[i];
+
                 sbyte rowIndex = (sbyte)(tile.CurrentX + exploreDirX);
                 sbyte columnIndex = (sbyte)(tile.CurrentY + exploreDirY);
 
-                GameManager.Instance.TileManager.SetObject(rowIndex, columnIndex, tile);
+                if(tile.Type != TileType.Wall)
+                    GameManager.Instance.TileManager.SetObject(rowIndex, columnIndex, tile);
             }
         }
     }

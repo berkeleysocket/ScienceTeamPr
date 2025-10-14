@@ -14,13 +14,8 @@ namespace KSY.Tile
             TileObject other = GameManager.Instance.TileManager.GetObject(otherTX, otherTY);
             TileObject my = GameManager.Instance.TileManager.GetObject(myTX, myTY);
 
-            CurrentX = otherTX;
-            CurrentY = otherTY;
-            presser.CurrentX = myTX;
-            presser.CurrentY = myTY;
-
-            GameManager.Instance.TileManager.SetObject(myTX, myTY, null);
-            GameManager.Instance.TileManager.SetObject(otherTX, otherTY, null);
+            GameManager.Instance.TileManager.SetNull(myTX, myTY);
+            GameManager.Instance.TileManager.SetNull(otherTX, otherTY);
             GameManager.Instance.TileManager.SetObject(myTX, myTY, other);
             GameManager.Instance.TileManager.SetObject(otherTX, otherTY, my);
         }

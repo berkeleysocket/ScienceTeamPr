@@ -1,17 +1,18 @@
 using System;
 using System.Collections.Generic;
 using KSY.Manager;
+using KSY.Tile;
 using UnityEditor;
 using UnityEngine;
 
 [Serializable]
-public class Row
+public class Row<T>
 {
     public Row(sbyte colums)
     {
-        this.colums = new GameObject[colums];   
+        this.colums = new T[colums];   
     }
-    public GameObject[] colums;
+    public T[] colums;
 }
 
 [Serializable]
@@ -19,15 +20,31 @@ public class MapData
 {
     public MapData(sbyte row = 0, sbyte colums = 0)
     {
-        this.rows = new Row[row];
+        this.rows = new Row<GameObject>[row];
 
         for(int g = 0; g < row; g++)
         {
-            this.rows[g] = new Row(colums);
+            this.rows[g] = new Row<GameObject>(colums);
         }
     }
 
-    public Row[] rows;
+    public Row<GameObject>[] rows;
+}
+
+[Serializable]
+public class TargetsData
+{
+    public TargetsData(sbyte row = 0, sbyte colums = 0)
+    {
+        this.rows = new Row<TileType>[row];
+
+        for (int g = 0; g < row; g++)
+        {
+            this.rows[g] = new Row<TileType>(colums);
+        }
+    }
+
+    public Row<TileType>[] rows;
 }
 
 [CustomEditor(typeof(GameManager),false)]
@@ -37,7 +54,7 @@ public class GameManagerEditor : Editor
     private sbyte _mapSizeX => reference.MapSizeX;
     private sbyte _mapSizeY => reference.MapSizeY;
     private List<MapData> _maps => reference.Maps;
-    private List<MapData> _targets => reference.Targets;
+    private List<TargetsData> _targets => reference.Targets;
 
     private void OnEnable()
     {
@@ -57,9 +74,10 @@ public class GameManagerEditor : Editor
 
         if(GUILayout.Button("Create Map"))
         {
-            MapData map = new MapData(_mapSizeX,_mapSizeY);
-            _maps.Add(map);
-            _targets.Add(map);
+            MapData mData = new MapData(_mapSizeX,_mapSizeY);
+            TargetsData tData = new TargetsData(_mapSizeX, _mapSizeY);
+            _maps.Add(mData);
+            _targets.Add(tData);
         }
 
         if(GUILayout.Button("Delete Map"))
@@ -96,9 +114,9 @@ public class GameManagerEditor : Editor
                 GUILayout.BeginHorizontal();
                 for (int w = 0; w < _mapSizeX; w++)
                 {
-                    GameObject field = _targets[g].rows[h].colums[w];
-                    GameObject tile = (GameObject)EditorGUILayout.ObjectField(field, typeof(GameObject), true);
-                    _targets[g].rows[h].colums[w] = tile;
+                    TileType field = _targets[g].rows[h].colums[w];
+                    field = (TileType)EditorGUILayout.EnumPopup(field);
+                    _targets[g].rows[h].colums[w] = field;
                 }
                 GUILayout.EndHorizontal();
             }
