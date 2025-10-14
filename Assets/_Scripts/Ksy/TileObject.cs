@@ -11,7 +11,7 @@ namespace KSY.Tile
     public abstract class TileObject : MonoBehaviour
     {
         public static int TileCount = 0;
-        public int TileID { get; private set; } = 0;
+        [field: SerializeField]public int TileID { get; private set; } = 0;
 
         public sbyte InitX
         {
@@ -46,7 +46,6 @@ namespace KSY.Tile
                 else if (value >= GameManager.Instance.MapSizeX) _currentX = (sbyte)(GameManager.Instance.MapSizeX - 1);
                 else
                 {
-                    Debug.Log($"CurrentX : {value}");
                     _currentX = value;
                 }
             }

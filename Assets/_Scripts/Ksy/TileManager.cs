@@ -1,16 +1,31 @@
+using System;
+using System.Collections.Generic;
 using KSY.Tile;
+using NUnit.Framework;
+using UnityEditor.TerrainTools;
 using UnityEngine;
 namespace KSY.Manager
 {
+    public struct ResultPoint
+    {
+        public sbyte X;
+        public sbyte Y;
+        public TileType Type;
+        public ResultPoint(sbyte x, sbyte y, TileType t)
+        {
+            this.X = x;
+            this.Y = y;
+            this.Type = t;
+        }
+    }
     public class TileManager
     {
         #region Member
         public TileObject[,] Map;
-        public void SetMap(TileObject[,] gameMap)
+        public List<ResultPoint> ResultPoints = new List<ResultPoint>();
+        public void InitMap(TileObject[,] gameMap)
         {
             if (gameMap == null || gameMap.Length <= 0) return;
-
-            //Map = (TileObject[,])gameMap.Clone();
             Map = gameMap;
         }
         public void InitTilePos()
@@ -64,7 +79,7 @@ namespace KSY.Manager
 
                     UpdatePos(rowIndex, columnIndex, obj);
 
-                    Debug.Log($"SetObject {obj.name} : ({rowIndex},{columnIndex})");
+                    CheckResultPoint();
                 }
                 else if(obj == null)
                 {
@@ -94,7 +109,33 @@ namespace KSY.Manager
         private void UpdatePos(sbyte x, sbyte y, TileObject obj)
         {
             obj.transform.position = new Vector2((float)x + 0.5f, (float)y + 0.5f);
-            Debug.Log($"<color=yellow>UpdatePos {obj.name} : ({obj.transform.position.x},{obj.transform.position.y})</color>");
+            //Debug.Log($"<color=yellow>UpdatePos {obj.name} : ({obj.transform.position.x},{obj.transform.position.y})</color>");
+        }
+
+        private void CheckResultPoint()
+        {
+            sbyte SuccessCheckPoint = 0;
+
+            foreach (ResultPoint element in ResultPoints)
+            {
+                sbyte checkX = element.X;
+                sbyte checkY = element.Y;
+                TileType checkT = element.Type;
+
+                if (Map[checkX,checkY] != null)
+                    Debug.Log($"있어야 하는 거 {checkT} : 실제로 있는 거 {Map[checkX, checkY].Type}");
+
+                if (Map[checkX, checkY] != null && Map[checkX, checkY].Type == checkT)
+                {
+                    SuccessCheckPoint++;
+                    Debug.Log($"{ SuccessCheckPoint}");
+                }
+            }
+
+            if (SuccessCheckPoint == ResultPoints.Count)
+            {
+                Debug.Log("<color=red>Clear!</color>");
+            }
         }
         #endregion
 

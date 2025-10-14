@@ -1,9 +1,8 @@
 using System;
 using System.Collections.Generic;
-using System.Linq;
 using KSY.Pattern;
 using KSY.Tile;
-using Unity.VisualScripting;
+using UnityEditor.UI;
 using UnityEngine;
 
 namespace KSY.Manager
@@ -37,7 +36,7 @@ namespace KSY.Manager
             Init();
 
             //Game Initialization
-            InitGame();
+            SettingMap(0);
         }
         private void Start()
         {
@@ -46,9 +45,6 @@ namespace KSY.Manager
         }
         private void Init()
         {
-            initMatrix = new GameObject[MapSizeX, MapSizeY];
-            _tileMatrix = new TileObject[MapSizeX, MapSizeY];
-
             if (TileManager == null)
             {
                 TileManager = new TileManager();
@@ -62,16 +58,21 @@ namespace KSY.Manager
             if (InputManager == null)
                 InputManager = gameObject.AddComponent<InputManager>();
         }
-        private void InitGame()
+        private void SettingMap(int selectMapIndex)
         {
-            if(CurrentMapIndex > -1)
+            this.CurrentMapIndex = selectMapIndex;
+
+            if (selectMapIndex > -1)
             {
-                if (Maps == null || Maps[CurrentMapIndex] == null) return;
+                if (Maps == null || Maps[selectMapIndex] == null) return;
 
                 TileObject.TileCount = 0;
 
                 //init initMatrix
-                MapData selectMap = Maps[CurrentMapIndex];
+                initMatrix = new GameObject[MapSizeX, MapSizeY];
+                _tileMatrix = new TileObject[MapSizeX, MapSizeY];
+
+                MapData selectMap = Maps[selectMapIndex];
 
                 for(int g = MapSizeY - 1; 0 <= g ; g--)
                 {
@@ -100,7 +101,28 @@ namespace KSY.Manager
                         }
                     }
                 }
-                TileManager.SetMap(_tileMatrix);
+
+                TileManager.ResultPoints.Clear();
+                for (int g = MapSizeY - 1; 0 <= g; g--)
+                {
+                    for (int h = MapSizeX - 1; 0 <= h; h--)
+                    {
+                        TileType tileT = Targets[selectMapIndex].rows[g].colums[h];
+
+                        //타겟 타일 배열의 타일이 None이 아닐 경우, 목적지 타일로 기록.
+                        if (tileT != TileType.None)
+                        {
+                            sbyte y = (sbyte)(MapSizeY - 1 - g);
+                            sbyte x = (sbyte)h;
+
+                            Debug.Log($"<color=green>Result Point : ({x},{y}) T : {tileT}</color>");
+                            TileManager.ResultPoints.Add(new ResultPoint(x, y, tileT));
+                        }
+                    }
+                }
+
+
+                TileManager.InitMap(_tileMatrix);
                 TileManager.InitTilePos();
             }
         }
