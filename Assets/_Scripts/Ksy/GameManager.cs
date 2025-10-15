@@ -32,9 +32,6 @@ namespace KSY.Manager
             base.Awake();
             //GameManager Initialization
             Init();
-
-            //Game Initialization
-            StartInGame(0);
         }
         private void Start()
         {
@@ -56,7 +53,7 @@ namespace KSY.Manager
             if (InputManager == null)
                 InputManager = gameObject.AddComponent<InputManager>();
         }
-        public void StartInGame(sbyte MapIndex)
+        public void StartInGame(int MapIndex)
         {
             SceneManager.AddEvent_Loaded(SceneManager.SceneType.Ksy_InGame, () => SettingMap(MapIndex));
             SceneManager.LoadScene(SceneManager.SceneType.Ksy_InGame);
