@@ -1,16 +1,16 @@
 using UnityEngine;
+using DG.Tweening;
 
 public class MainMenuReturn : MonoBehaviour
 {
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
-    void Start()
+    public GameObject mainMenuUI;
+    public void Cleared()
     {
-        
+        mainMenuUI.GetComponent<RectTransform>().DOAnchorPosY(0, 0.4f).SetEase(Ease.OutExpo);
     }
-
-    // Update is called once per frame
-    void Update()
+    public void ReturnToMainMenu()
     {
-        
+        UnityEngine.SceneManagement.SceneManager.LoadScene("MainMenu");
+        mainMenuUI.GetComponent<RectTransform>().DOAnchorPosY(2000, 0.4f).SetEase(Ease.OutExpo);
     }
 }
