@@ -758,6 +758,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Maps:
   - {fileID: 0}
+  - {fileID: 11400000, guid: 208bb8de827c40642b16dfd0b8fc1bde, type: 2}
+  - {fileID: 0}
 --- !u!4 &389204233
 Transform:
   m_ObjectHideFlags: 0
