@@ -10,10 +10,10 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 09d5e8e8a0bdbbe44b013cb98ab279f1, type: 3}
-  m_Name: MapDataSO
+  m_Name: Ksy_Stage01
   m_EditorClassIdentifier: 
   MapSizeX: 7
-  MapSizeY: 8
+  MapSizeY: 7
   Map:
     rows:
     - colums:
@@ -65,7 +65,7 @@ MonoBehaviour:
       - {fileID: 0}
       - {fileID: 0}
     - colums:
-      - {fileID: 6645964787796042129, guid: 339941c78ecdfda43a6acd484e240da4, type: 3}
+      - {fileID: 0}
       - {fileID: 0}
       - {fileID: 0}
       - {fileID: 0}
