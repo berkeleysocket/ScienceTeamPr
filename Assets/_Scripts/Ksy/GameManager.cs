@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using KSY.Pattern;
 using KSY.Tile;
 using UnityEngine;
+using UnityEngine.Tilemaps;
 
 namespace KSY.Manager
 {
@@ -24,6 +25,15 @@ namespace KSY.Manager
         public TileManager TileManager { get; private set; }
         public InputManager InputManager { get; private set; }
         public SceneManager SceneManager { get; private set; }
+        
+        public UnityEngine.Tilemaps.Tile Tile_Diamagnetic;
+        public UnityEngine.Tilemaps.Tile Tile_Ferromagnetic;
+        public UnityEngine.Tilemaps.Tile Tile_MirrorPlayer;
+        public UnityEngine.Tilemaps.Tile Tile_Paramagnetic;
+        public UnityEngine.Tilemaps.Tile Tile_Player;
+        public UnityEngine.Tilemaps.Tile Tile_Void;
+
+        public Tilemap _tilemap;
 
 
         private void Awake()
@@ -51,6 +61,9 @@ namespace KSY.Manager
 
             if (InputManager == null)
                 InputManager = gameObject.AddComponent<InputManager>();
+
+            if (_tilemap == null)
+                _tilemap = gameObject.GetComponentInChildren<Tilemap>();
         }
         public void StartInGame(int MapIndex)
         {
@@ -92,8 +105,6 @@ namespace KSY.Manager
 
                             if (!tileBody.TryGetComponent(out TileObject tileSc)) return;
 
-                            Debug.Log($"{tile.name} : {initX}, {initY}");
-
                             tileSc.InitY = initY;
                             tileSc.InitX = initX;
 
@@ -111,15 +122,49 @@ namespace KSY.Manager
                     for (int h = MapSizeX - 1; 0 <= h; h--)
                     {
                         TileType tileT = currentMap.Targets.rows[g].colums[h];
+                        sbyte y = (sbyte)(MapSizeY - 1 - g);
+                        sbyte x = (sbyte)h;
 
                         //타겟 타일 배열의 타일이 None이 아닐 경우, 목적지 타일로 기록.
                         if (tileT != TileType.None)
                         {
-                            sbyte y = (sbyte)(MapSizeY - 1 - g);
-                            sbyte x = (sbyte)h;
-
                             Debug.Log($"<color=green>Result Point : ({x},{y}) T : {tileT}</color>");
                             TileManager.ResultPoints.Add(new ResultPoint(x, y, tileT));
+                        }
+
+                        switch (tileT)
+                        {
+                            case TileType.Diamagnetic:
+                                {
+                                    _tilemap.SetTile(new Vector3Int(x, y), Tile_Diamagnetic);
+                                    break;
+                                }
+                            case TileType.Ferromagnetic:
+                                {
+                                    _tilemap.SetTile(new Vector3Int(x, y), Tile_Ferromagnetic);
+                                    break;
+                                }
+                            case TileType.MirrorPlayer:
+                                {
+                                    _tilemap.SetTile(new Vector3Int(x, y), Tile_MirrorPlayer);
+                                    break;
+                                }
+                            case TileType.Paramagnetic:
+                                {
+                                    _tilemap.SetTile(new Vector3Int(x, y), Tile_Paramagnetic);
+                                    break;
+                                }
+                            case TileType.Player:
+                                {
+                                    _tilemap.SetTile(new Vector3Int(x, y), Tile_Player);
+                                    break;
+                                }
+                            default:
+                                {
+                                    _tilemap.SetTile(new Vector3Int(x, y), Tile_Void);
+                                    break;
+                                }
+
                         }
                     }
                 }
