@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: MapDataSO
   m_EditorClassIdentifier: 
   MapSizeX: 7
-  MapSizeY: 7
+  MapSizeY: 8
   Map:
     rows:
     - colums:
@@ -65,7 +65,7 @@ MonoBehaviour:
       - {fileID: 0}
       - {fileID: 0}
     - colums:
-      - {fileID: 0}
+      - {fileID: 6645964787796042129, guid: 339941c78ecdfda43a6acd484e240da4, type: 3}
       - {fileID: 0}
       - {fileID: 0}
       - {fileID: 0}
