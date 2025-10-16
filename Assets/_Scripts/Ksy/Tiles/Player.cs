@@ -1,4 +1,5 @@
 using KSY.Manager;
+using System;
 using Unity.Cinemachine;
 using UnityEngine;
 
@@ -6,6 +7,7 @@ namespace KSY.Tile
 {
     public class Player : TileObject
     {
+        public Action<sbyte, sbyte> HandleMoveKeyPressed;
         public override void Magnetization(sbyte xDir, sbyte yDir, TileObject presser)
         {
             throw new System.NotImplementedException();
@@ -18,9 +20,14 @@ namespace KSY.Tile
             target.TrackingTarget = transform;
             cam.Target = target;
         }
+        private void OnDisable()
+        {
+            GameManager.Instance.InputManager.MoveKeyPressed -= HandleMoveKeyPressed;
+        }
         private void Start()
         {
-            GameManager.Instance.InputManager.MoveKeyPressed += (x,y)=> Move(x,y);
+            HandleMoveKeyPressed = (x, y) => Move(x, y);
+            GameManager.Instance.InputManager.MoveKeyPressed += HandleMoveKeyPressed;
         }
     }
 }

@@ -60,7 +60,7 @@ namespace KSY.Manager
 
             //키가 이미 있으면 등록, 없으면 만들고 등록
             if (SceneLoaded.ContainsKey(t))
-                SceneLoaded[t] += onFunction;
+                SceneLoaded[t] = onFunction;
             else
             {
                 SceneLoaded.Add(t, onFunction);

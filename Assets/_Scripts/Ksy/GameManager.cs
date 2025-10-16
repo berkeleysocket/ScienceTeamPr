@@ -54,6 +54,7 @@ namespace KSY.Manager
         }
         public void StartInGame(int MapIndex)
         {
+            if (Instance == null || SceneManager == null) return;
             SceneManager.AddEvent_Loaded(SceneManager.SceneType.Ksy_InGame, () => SettingMap(MapIndex));
             SceneManager.LoadScene(SceneManager.SceneType.Ksy_InGame);
         }
