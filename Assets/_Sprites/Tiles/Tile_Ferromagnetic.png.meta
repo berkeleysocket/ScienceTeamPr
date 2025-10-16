@@ -1,10 +1,10 @@
 fileFormatVersion: 2
-guid: 7c8d6734c8bd99f4d8d16c90e64a63f3
+guid: a239b5dcc2680f64fa11d340a58b80ab
 TextureImporter:
   internalIDToNameTable:
   - first:
-      213: 7018805322619697445
-    second: Tile_Void_0
+      213: -5630910797617097309
+    second: Tile_Ferromagnetic_0
   externalObjects: {}
   serializedVersion: 13
   mipmaps:
@@ -100,7 +100,7 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: Tile_Void_0
+      name: Tile_Ferromagnetic_0
       rect:
         serializedVersion: 2
         x: 0
@@ -115,8 +115,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: 5293e52f04ec76160800000000000000
-      internalID: 7018805322619697445
+      spriteID: 3a51f12a67cfad1b0800000000000000
+      internalID: -5630910797617097309
       vertices: []
       indices: 
       edges: []
@@ -135,7 +135,7 @@ TextureImporter:
     spriteCustomMetadata:
       entries: []
     nameFileIdTable:
-      Tile_Void_0: 7018805322619697445
+      Tile_Ferromagnetic_0: -5630910797617097309
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 
