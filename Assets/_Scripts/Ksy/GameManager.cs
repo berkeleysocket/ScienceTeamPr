@@ -13,7 +13,7 @@ namespace KSY.Manager
 
         public GameObject[,] initMatrix;
         private TileObject[,] _tileMatrix;
-
+        public MainMenuReturn mainMenuReturn;
         public sbyte MapSizeX { get; private set; } = 7;
         public sbyte MapSizeY { get; private set; } = 7;
 

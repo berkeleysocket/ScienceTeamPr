@@ -135,6 +135,7 @@ namespace KSY.Manager
             if (SuccessCheckPoint == ResultPoints.Count)
             {
                 Debug.Log("<color=red>Clear!</color>");
+                GameManager.Instance.mainMenuReturn.Cleared();
             }
         }
         #endregion
