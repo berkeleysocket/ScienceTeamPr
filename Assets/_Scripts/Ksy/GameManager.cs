@@ -15,8 +15,8 @@ namespace KSY.Manager
         public GameObject[,] initMatrix;
         private TileObject[,] _tileMatrix;
 
-        [field: SerializeField] public sbyte MapSizeX { get; private set; } = 0;
-        [field: SerializeField] public sbyte MapSizeY { get; private set; } = 0;
+        public sbyte MapSizeX { get; private set; } = 7;
+        public sbyte MapSizeY { get; private set; } = 7;
 
         //게임 시작 이벤트
         public event Action GameStarted;
