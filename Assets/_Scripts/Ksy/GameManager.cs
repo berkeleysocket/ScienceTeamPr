@@ -8,8 +8,7 @@ namespace KSY.Manager
 {
     public class GameManager : MonoSingleton<GameManager>
     {
-        [HideInInspector] public List<MapData> Maps = new List<MapData>();
-        [HideInInspector] public List<TargetsData> Targets = new List<TargetsData>();
+        public List<MapDataSO> Maps = new List<MapDataSO>();
         public int CurrentMapIndex { get; private set; } = 0;
 
         public GameObject[,] initMatrix;
@@ -67,12 +66,15 @@ namespace KSY.Manager
                 if (Maps == null || Maps[selectMapIndex] == null) return;
 
                 TileObject.TileCount = 0;
+                MapDataSO currentMap = Maps[selectMapIndex];
+                sbyte sizeX = currentMap.MapSizeX;
+                sbyte sizeY = currentMap.MapSizeY;
 
                 //init initMatrix
-                initMatrix = new GameObject[MapSizeX, MapSizeY];
-                _tileMatrix = new TileObject[MapSizeX, MapSizeY];
+                initMatrix = new GameObject[sizeX, sizeY];
+                _tileMatrix = new TileObject[sizeX, sizeY];
 
-                MapData selectMap = Maps[selectMapIndex];
+                MapData selectMap = currentMap.Map;
 
                 for(int g = MapSizeY - 1; 0 <= g ; g--)
                 {
@@ -107,7 +109,7 @@ namespace KSY.Manager
                 {
                     for (int h = MapSizeX - 1; 0 <= h; h--)
                     {
-                        TileType tileT = Targets[selectMapIndex].rows[g].colums[h];
+                        TileType tileT = currentMap.Targets.rows[g].colums[h];
 
                         //타겟 타일 배열의 타일이 None이 아닐 경우, 목적지 타일로 기록.
                         if (tileT != TileType.None)
