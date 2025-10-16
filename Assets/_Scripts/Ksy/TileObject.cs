@@ -4,10 +4,6 @@ using UnityEngine;
 
 namespace KSY.Tile
 {
-    public class Target : MonoBehaviour
-    {
-
-    }
     public abstract class TileObject : MonoBehaviour
     {
         public static int TileCount = 0;
@@ -107,6 +103,7 @@ namespace KSY.Tile
     {
         None = 0,
         Player,
+        MirrorPlayer,
         Ferromagnetic,//悪切失端
         Paramagnetic,//雌切失端
         Diamagnetic,//鋼切失端
