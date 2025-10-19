@@ -17,7 +17,7 @@ public class MapManager : MonoBehaviour
     public UnityEngine.Tilemaps.Tile Tile_Player;
     public UnityEngine.Tilemaps.Tile Tile_Void;
 
-    private Tilemap _tileMap;
+    public Tilemap TileMapCompo;
 
     public void Create(int mapIndex)
     {
@@ -53,8 +53,8 @@ public class MapManager : MonoBehaviour
                     GameObject tileBody = Instantiate(tile);
 
                     //타일의 초기화 위치를 계산함
-                    sbyte initY = (sbyte)(sizeY - 1 - g);
-                    sbyte initX = (sbyte)h;
+                    int initY = sizeY - 1 - g;
+                    int initX = h;
 
                     if (!tileBody.TryGetComponent(out TileObject tileSc)) return;
 
@@ -91,31 +91,33 @@ public class MapManager : MonoBehaviour
                 {
                     case TileObjectType.Diamagnetic:
                         {
-                            _tileMap.SetTile(new Vector3Int(x, y), Tile_Diamagnetic);
+                            TileMapCompo.SetTile(new Vector3Int(x, y), Tile_Diamagnetic);
                             break;
                         }
                     case TileObjectType.Ferromagnetic:
                         {
-                            _tileMap.SetTile(new Vector3Int(x, y), Tile_Ferromagnetic);
+                            TileMapCompo.SetTile(new Vector3Int(x, y), Tile_Ferromagnetic);
                             break;
                         }
                     case TileObjectType.MirrorPlayer:
                         {
-                            _tileMap.SetTile(new Vector3Int(x, y), Tile_MirrorPlayer);
+                            TileMapCompo.SetTile(new Vector3Int(x, y), Tile_MirrorPlayer);
                             break;
                         }
                     case TileObjectType.Paramagnetic:
                         {
-                            _tileMap.SetTile(new Vector3Int(x, y), Tile_Paramagnetic);
+                            TileMapCompo.SetTile(new Vector3Int(x, y), Tile_Paramagnetic);
                             break;
                         }
                     case TileObjectType.Player:
                         {
-                            _tileMap.SetTile(new Vector3Int(x, y), Tile_Player);
+                            TileMapCompo.SetTile(new Vector3Int(x, y), Tile_Player);
                             break;
                         }
                     default:
                         {
+                            TileMapCompo.SetTile(new Vector3Int(x, y), Tile_Void);
+
                             break;
                         }
 

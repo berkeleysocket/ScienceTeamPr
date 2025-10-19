@@ -23,7 +23,7 @@ namespace KSY.Pattern
         {
             if (_instance != null)
             {
-                //if (_instance != this)
+                if (_instance != this)
                     Destroy(gameObject);
 
                 return;

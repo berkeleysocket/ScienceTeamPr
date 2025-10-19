@@ -9,12 +9,13 @@ public class MapDataSO : ScriptableObject
 {
     [field: SerializeField]
     public int SizeX { get; private set; }
+
     [field: SerializeField]
     public int SizeY { get; private set; }
 
     [HideInInspector]   
-    public TileMatrix tiles = new TileMatrix();
+    public TileMatrix tiles;
     [HideInInspector]
-    public DestinationMatrix destinations = new DestinationMatrix();
+    public DestinationMatrix destinations;
 }
 

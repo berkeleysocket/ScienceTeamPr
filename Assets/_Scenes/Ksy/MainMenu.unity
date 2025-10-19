@@ -757,18 +757,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 75ed266f1243ab442a7e2638ce48904c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Maps:
-  - {fileID: 11400000, guid: 55098cae406275b418fb54f10f647fca, type: 2}
-  - {fileID: 11400000, guid: 208bb8de827c40642b16dfd0b8fc1bde, type: 2}
-  - {fileID: 11400000, guid: 58a3202b8589a3b43bced77403234d0b, type: 2}
-  mainMenuReturn: {fileID: 596768976}
   Tile_Diamagnetic: {fileID: 11400000, guid: 9b827c62d2ce03e418c5acea346fe3a9, type: 2}
   Tile_Ferromagnetic: {fileID: 11400000, guid: 8cf88a51baccf134fae17ee0d2430f1c, type: 2}
   Tile_MirrorPlayer: {fileID: 11400000, guid: b5e7752be38223b4abb15bb2b85aa616, type: 2}
   Tile_Paramagnetic: {fileID: 11400000, guid: 67e8c0a75a71bbd4bbde948854858493, type: 2}
   Tile_Player: {fileID: 11400000, guid: 499dd49d9f5ed964c9a720fdbbe52654, type: 2}
   Tile_Void: {fileID: 11400000, guid: 7fe0accdcec61024e83ac9085e5504b6, type: 2}
-  _tilemap: {fileID: 1967113292}
+  <Maps>k__BackingField:
+  - {fileID: 11400000, guid: f956457996032af47aec38ec85548a75, type: 2}
+  mainMenuReturn: {fileID: 596768976}
 --- !u!4 &389204233
 Transform:
   m_ObjectHideFlags: 0

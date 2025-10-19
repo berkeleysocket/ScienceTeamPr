@@ -52,16 +52,111 @@ public class MapDataSOEditor : Editor
 
     private int _sizeX => _reference.SizeX;
     private int _sizeY => _reference.SizeY;
+    //private int __sizeX
+    //{
+    //    get
+    //    {
+    //        if (_sizeX == 0)
+    //        {
+    //            _sizeX = 1;
+    //        }
+    //        return _sizeX;
+    //    }
+    //    set 
+    //    {
+    //        if (value == 0) return;
 
-    private TileMatrix _tiles;
-    private DestinationMatrix _destinations;
+    //        TileMatrix oldTiles = _reference.tiles.rows.;
+    //        DestinationMatrix oldDestinations = _reference.destinations;
+
+    //        _reference.tiles = new TileMatrix(value, __sizeY);
+    //        _reference.destinations = new DestinationMatrix(value, __sizeY);
+
+    //        if(value >= __sizeX)
+    //        {
+    //            for (int h = 0; h < __sizeY; h++)
+    //            {
+    //                for (int w = 0; w < __sizeX; w++)
+    //                {
+    //                    Debug.Log($"_reference.tiles.rows[0].colums.Length : {_reference.tiles.rows[0].colums.Length}");
+    //                    Debug.Log($"y : {__sizeY}");
+    //                    Debug.Log($"x : {__sizeX}");
+
+    //                    _reference.tiles.rows[h].colums[w] = oldTiles.rows[h].colums[w];
+    //                    _reference.destinations.rows[h].colums[w] = oldDestinations.rows[h].colums[w];
+    //                }
+    //            }
+    //        }
+    //        else if(__sizeX >= value)
+    //        { 
+    //            for (int h = 0; h < __sizeY; h++)
+    //            {
+    //                for (int w = 0; w < value; w++)
+    //                {
+    //                    _reference.tiles.rows[h].colums[w] = oldTiles.rows[h].colums[w];
+    //                    _reference.destinations.rows[h].colums[w] = oldDestinations.rows[h].colums[w];
+    //                }
+    //            }
+    //        }
+
+    //        _sizeX = value;
+    //        _reference.SizeX = value;
+    //    }
+    //}
+    //private int __sizeY
+    //{
+    //    get
+    //    {
+    //        if (_sizeY == 0)
+    //        {
+    //            _sizeY = 1;
+    //        }
+    //        return _sizeY;
+    //    }
+    //    set
+    //    {
+    //        if (value == 0) return;
+
+    //        TileMatrix oldTiles = _reference.tiles;
+    //        DestinationMatrix oldDestinations = _reference.destinations;
+
+    //        _reference.tiles = new TileMatrix(__sizeX, value);
+    //        _reference.destinations = new DestinationMatrix(__sizeX, value);
+
+    //        if(value >= __sizeY)
+    //        {
+    //            for (int h = 0; h < __sizeY; h++)
+    //            {
+    //                for (int w = 0; w < __sizeX; w++)
+    //                {
+    //                    _reference.tiles.rows[h].colums[w] = oldTiles.rows[h].colums[w];
+    //                    _reference.destinations.rows[h].colums[w] = oldDestinations.rows[h].colums[w];
+    //                }
+    //            }
+    //        }
+    //        else if(__sizeY >= value)
+    //        {
+    //            for (int h = 0; h < value; h++)
+    //            {
+    //                for (int w = 0; w < __sizeX; w++)
+    //                {
+    //                    _reference.tiles.rows[h].colums[w] = oldTiles.rows[h].colums[w];
+    //                    _reference.destinations.rows[h].colums[w] = oldDestinations.rows[h].colums[w];
+    //                }
+    //            }
+    //        }
+
+    //        _sizeY = value;
+    //        _reference.SizeY = value;
+    //    }
+    //}
 
     private void OnEnable()
     {
         _reference = (MapDataSO)target;
 
-        this._tiles = _reference.tiles;
-        this._destinations = _reference.destinations;
+        //__sizeX = _reference.SizeX;
+        //__sizeY = _reference.SizeY;
     }
     public override void OnInspectorGUI()
     {
@@ -74,69 +169,64 @@ public class MapDataSOEditor : Editor
         //그냥 DrawDefaultInspector()를 호출한다.
         base.OnInspectorGUI();
 
-        //if (GUILayout.Button("Create Map"))
+        //int before_sizeX = __sizeX;
+        //int after_sizeX = EditorGUILayout.IntField(before_sizeX);
+
+        //if (before_sizeX != after_sizeX)
         //{
-        //    MapData mData = new MapData(_mapSizeX, _mapSizeY);
-        //    TargetsData tData = new TargetsData(_mapSizeX, _mapSizeY);
-        //    _maps.Add(mData);
-        //    _targets.Add(tData);
+        //    __sizeX = after_sizeX;
         //}
 
-        //if (GUILayout.Button("Delete Map"))
+        //int before_sizeY = __sizeY;
+        //int after_sizeY = EditorGUILayout.IntField(before_sizeY);
+
+        //if(before_sizeY != after_sizeY)
         //{
-        //    if (_maps.Count > 0)
-        //        _maps.RemoveAt(_maps.Count - 1);
-
-        //    if (_targets.Count > 0)
-        //        _targets.RemoveAt(_targets.Count - 1);
+        //    __sizeY = after_sizeY;
         //}
-
-        GUILayout.Label("");
-        GUILayout.Label($"TileMatrix");
 
         if (GUILayout.Button("Create TileMatrix"))
         {
-            Debug.Log($"l : {_tiles.rows.Length != 0}");
-            if(_tiles != null && _tiles.rows.Length != 0)
+            if(_reference.tiles != null)
             {
-                Debug.Log("Only one map can exist per SO");
-                return;
+                if(_reference.tiles.rows.Length != 0)
+                {
+                    Debug.Log("Only one map can exist per SO");
+                    return;
+                }
             }
-
-            _tiles = new TileMatrix(_sizeX, _sizeY);
-            _destinations = new DestinationMatrix(_sizeX, _sizeY);
+            _reference.tiles = new TileMatrix(_sizeX, _sizeX);
+            _reference.destinations = new DestinationMatrix(_sizeX, _sizeX);
         }
 
-        GUILayout.Label("");
-        GUILayout.Label($"Tiles");
-        if(_tiles != null && _tiles.rows.Length != 0)
+        if(_reference.tiles != null)
         {
-            for (int h = 0; h < _sizeY; h++)
+            GUILayout.Label("");
+            GUILayout.Label($"Tiles");
+            for (int h = 0; h < _reference.tiles.rows.Length; h++)
             {
                 GUILayout.BeginHorizontal();
-                for (int w = 0; w < _sizeX; w++)
+                for (int w = 0; w < _reference.tiles.rows.Length; w++)
                 {
-                    GameObject field = _tiles.rows[h].colums[w];
+                    GameObject field = _reference.tiles.rows[h].colums[w];
                     GameObject tile = (GameObject)EditorGUILayout.ObjectField(field, typeof(GameObject), true);
-                    _tiles.rows[h].colums[w] = tile;
+                    _reference.tiles.rows[h].colums[w] = tile;
                 }
                 GUILayout.EndHorizontal();
             }
         }
-
-
-        GUILayout.Label("");
-        GUILayout.Label($"Destinations");
-        if(_destinations != null && _destinations.rows.Length != 0)
+        if(_reference.destinations != null)
         {
-            for (int h = 0; h < _sizeY; h++)
+            GUILayout.Label("");
+            GUILayout.Label($"Destinations");
+            for (int h = 0; h < _reference.tiles.rows.Length; h++)
             {
                 GUILayout.BeginHorizontal();
-                for (int w = 0; w < _sizeX; w++)
+                for (int w = 0; w < _reference.tiles.rows.Length; w++)
                 {
-                    TileObjectType field = _destinations.rows[h].colums[w];
+                    TileObjectType field = _reference.destinations.rows[h].colums[w];
                     field = (TileObjectType)EditorGUILayout.EnumPopup(field);
-                    _destinations.rows[h].colums[w] = field;
+                    _reference.destinations.rows[h].colums[w] = field;
                 }
                 GUILayout.EndHorizontal();
             }

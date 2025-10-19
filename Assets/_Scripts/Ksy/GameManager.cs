@@ -2,11 +2,19 @@ using System;
 using System.Collections.Generic;
 using KSY.Pattern;
 using UnityEngine;
+using UnityEngine.Tilemaps;
 
 namespace KSY.Manager
 {
     public class GameManager : MonoSingleton<GameManager>
     {
+        public UnityEngine.Tilemaps.Tile Tile_Diamagnetic;
+        public UnityEngine.Tilemaps.Tile Tile_Ferromagnetic;
+        public UnityEngine.Tilemaps.Tile Tile_MirrorPlayer;
+        public UnityEngine.Tilemaps.Tile Tile_Paramagnetic;
+        public UnityEngine.Tilemaps.Tile Tile_Player;
+        public UnityEngine.Tilemaps.Tile Tile_Void;
+
         [field: SerializeField]
         public List<MapDataSO> Maps { get; private set;  } = new List<MapDataSO>();
         public MainMenuReturn mainMenuReturn;
@@ -47,7 +55,17 @@ namespace KSY.Manager
                 InputManager = gameObject.AddComponent<InputManager>();
 
             if (MapManager == null)
+            {
                 MapManager = gameObject.AddComponent<MapManager>();
+                MapManager.TileMapCompo = gameObject.GetComponentInChildren<Tilemap>();
+                .
+                MapManager.Tile_Diamagnetic = Tile_Diamagnetic;
+                MapManager.Tile_Ferromagnetic = Tile_Ferromagnetic;
+                MapManager.Tile_MirrorPlayer = Tile_MirrorPlayer;
+                MapManager.Tile_Paramagnetic = Tile_Paramagnetic;
+                MapManager.Tile_Player = Tile_Player;
+                MapManager.Tile_Void = Tile_Void;
+            }
         }
         public void StartMap(int index)
         {
