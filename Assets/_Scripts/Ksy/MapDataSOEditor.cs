@@ -96,55 +96,51 @@ public class MapDataSOEditor : Editor
 
         if (GUILayout.Button("Create TileMatrix"))
         {
-            if(_tiles != null)
+            Debug.Log($"l : {_tiles.rows.Length != 0}");
+            if(_tiles != null && _tiles.rows.Length != 0)
             {
                 Debug.Log("Only one map can exist per SO");
+                return;
             }
+
             _tiles = new TileMatrix(_sizeX, _sizeY);
             _destinations = new DestinationMatrix(_sizeX, _sizeY);
         }
 
+        GUILayout.Label("");
+        GUILayout.Label($"Tiles");
+        if(_tiles != null && _tiles.rows.Length != 0)
+        {
             for (int h = 0; h < _sizeY; h++)
             {
-                if (h >= _tiles.rows.Length)
-                {
-                    Debug.LogError($"[TileMatrix] h({h}) >= rows.Length({_tiles.rows.Length})");
-                    break;
-                }
-
                 GUILayout.BeginHorizontal();
                 for (int w = 0; w < _sizeX; w++)
                 {
-                    if (w >= _tiles.rows[h].colums.Length)
-                    {
-                        Debug.LogError($"[TileMatrix] w({w}) >= colums.Length({_tiles.rows[h].colums.Length})");
-                        break;
-                    }
-
                     GameObject field = _tiles.rows[h].colums[w];
                     GameObject tile = (GameObject)EditorGUILayout.ObjectField(field, typeof(GameObject), true);
                     _tiles.rows[h].colums[w] = tile;
                 }
                 GUILayout.EndHorizontal();
             }
-
-
-        GUILayout.Label("");
-        GUILayout.Label($"Targets");
-        for (int h = 0; h < _sizeY; h++)
-        {
-            GUILayout.BeginHorizontal();
-            for (int w = 0; w < _sizeX; w++)
-            {
-                TileObjectType field = _destinations.rows[h].colums[w];
-                field = (TileObjectType)EditorGUILayout.EnumPopup(field);
-                _destinations.rows[h].colums[w] = field;
-            }
-            GUILayout.EndHorizontal();
         }
 
 
-
+        GUILayout.Label("");
+        GUILayout.Label($"Destinations");
+        if(_destinations != null && _destinations.rows.Length != 0)
+        {
+            for (int h = 0; h < _sizeY; h++)
+            {
+                GUILayout.BeginHorizontal();
+                for (int w = 0; w < _sizeX; w++)
+                {
+                    TileObjectType field = _destinations.rows[h].colums[w];
+                    field = (TileObjectType)EditorGUILayout.EnumPopup(field);
+                    _destinations.rows[h].colums[w] = field;
+                }
+                GUILayout.EndHorizontal();
+            }
+        }
 
         //serializedObject : 직렬화된 오브젝트
         //Debug.Log(serializedObject.targetObject);
