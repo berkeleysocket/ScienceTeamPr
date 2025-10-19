@@ -73,7 +73,6 @@ public class MapDataSOEditor : Editor
 
         //그냥 DrawDefaultInspector()를 호출한다.
         base.OnInspectorGUI();
-        GUILayout.Label("");
 
         //if (GUILayout.Button("Create Map"))
         //{
@@ -95,14 +94,14 @@ public class MapDataSOEditor : Editor
         GUILayout.Label("");
         GUILayout.Label($"TileMatrix");
 
-        if (GUILayout.Button("Create TileMatrix") && _tiles == null)
+        if (GUILayout.Button("Create TileMatrix"))
         {
+            if(_tiles != null)
+            {
+                Debug.Log("Only one map can exist per SO");
+            }
             _tiles = new TileMatrix(_sizeX, _sizeY);
             _destinations = new DestinationMatrix(_sizeX, _sizeY);
-        }
-        else if (_tiles != null || _destinations != null)
-        {
-            Debug.Log("tiles is not null");
         }
 
             for (int h = 0; h < _sizeY; h++)

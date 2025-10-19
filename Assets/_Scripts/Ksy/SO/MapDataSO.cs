@@ -16,11 +16,5 @@ public class MapDataSO : ScriptableObject
     public TileMatrix tiles = new TileMatrix();
     [HideInInspector]
     public DestinationMatrix destinations = new DestinationMatrix();
-
-    public void OnEnable()
-    {
-        tiles = new TileMatrix(SizeX,SizeY);
-        destinations = new DestinationMatrix(SizeX, SizeY);
-    }
 }
 
