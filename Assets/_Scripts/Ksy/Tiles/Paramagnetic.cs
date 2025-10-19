@@ -4,12 +4,12 @@ namespace KSY.Tile
 {
     public class Paramagnetic : TileObject
     {
-        public override void Magnetization(sbyte xDir, sbyte yDir, TileObject presser)
+        public override void Magnetization(int xDir, int yDir, TileObject presser)
         {
-            sbyte myTX = CurrentX;
-            sbyte myTY = CurrentY;
-            sbyte otherTX = presser.CurrentX;
-            sbyte otherTY = presser.CurrentY;
+            int myTX = CurrentX;
+            int myTY = CurrentY;
+            int otherTX = presser.CurrentX;
+            int otherTY = presser.CurrentY;
 
             TileObject other = GameManager.Instance.TileManager.GetObject(otherTX, otherTY);
             TileObject my = GameManager.Instance.TileManager.GetObject(myTX, myTY);

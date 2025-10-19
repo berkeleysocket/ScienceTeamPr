@@ -6,7 +6,7 @@ namespace KSY.Tile
     public class MirrorPlayer : TileObject
     {
         public Action<sbyte, sbyte> HandleMoveKeyPressed;
-        public override void Magnetization(sbyte xDir, sbyte yDir, TileObject presser)
+        public override void Magnetization(int xDir, int yDir, TileObject presser)
         {
             throw new System.NotImplementedException();
         }
@@ -16,7 +16,7 @@ namespace KSY.Tile
         }
         private void Start()
         {
-            HandleMoveKeyPressed = (x, y) => Move((sbyte)-x, (sbyte)-y);
+            HandleMoveKeyPressed = (x, y) => Move(-x, -y);
             GameManager.Instance.InputManager.MoveKeyPressed += HandleMoveKeyPressed;
         }
     }

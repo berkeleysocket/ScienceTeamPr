@@ -8,9 +8,9 @@ namespace KSY.Tile
     public class Player : TileObject
     {
         public Action<sbyte, sbyte> HandleMoveKeyPressed;
-        public override void Magnetization(sbyte xDir, sbyte yDir, TileObject presser)
+        public override void Magnetization(int xDir, int yDir, TileObject presser)
         {
-            throw new System.NotImplementedException();
+            //Debug.LogError($"{gameObject.name}의 Magnetization는 오버라이드되지 않았습니다.");
         }
 
         private void OnEnable()

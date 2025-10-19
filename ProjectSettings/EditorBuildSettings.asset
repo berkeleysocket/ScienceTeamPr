@@ -6,14 +6,11 @@ EditorBuildSettings:
   serializedVersion: 2
   m_Scenes:
   - enabled: 1
-    path: Assets/_Scenes/SampleScene.unity
-    guid: 8c9cfa26abfee488c85f1582747f6a02
+    path: Assets/_Scenes/Ksy/MainMenu.unity
+    guid: ffa1e7df70228a34aab52e7c6fd1c49e
   - enabled: 1
-    path: Assets/_Scenes/Ksy/Ksy_MainMenu.unity
-    guid: 39a9855481749134da12b2d201da7005
-  - enabled: 1
-    path: Assets/_Scenes/Ksy/Ksy_InGame.unity
-    guid: aeac900dafe6f1946b02a6cd552a8528
+    path: Assets/_Scenes/Ksy/InGame.unity
+    guid: 2c26e0884f3ba27488f7e77a47a8dd43
   m_configObjects:
     com.unity.input.settings.actions: {fileID: -944628639613478452, guid: 2bcd2660ca9b64942af0de543d8d7100, type: 3}
   m_UseUCBPForAssetBundles: 0

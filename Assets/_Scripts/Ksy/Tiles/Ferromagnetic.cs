@@ -5,17 +5,17 @@ namespace KSY.Tile
 {
     public class Ferromagnetic : TileObject
     {
-        public override void Magnetization(sbyte xDir, sbyte yDir, TileObject presser)
+        public override void Magnetization(int xDir, int yDir, TileObject presser)
         {
             //탐색 방향 계산
-            sbyte exploreDirX = (sbyte)-xDir;
-            sbyte exploreDirY = (sbyte)-yDir;
+            int exploreDirX = -xDir;
+            int exploreDirY = -yDir;
 
             List<TileObject> tilesToMove = new List<TileObject>();
 
             //탐색할 좌표 저장
-            sbyte checkX = CurrentX;
-            sbyte checkY = CurrentY;
+            int checkX = CurrentX;
+            int checkY = CurrentY;
 
             while (true)
             {
@@ -27,7 +27,7 @@ namespace KSY.Tile
                 checkY += exploreDirY;
 
                 //만약 경계 밖이라면 return;
-                if (!TileManager.InMap(checkX, checkY)) return;
+                if (!MapManager.InMap(checkX, checkY)) return;
 
                 //빈 칸을 발견하면 탐색을 종료
                 if (GameManager.Instance.TileManager.GetObject(checkX, checkY) == null)
@@ -44,7 +44,7 @@ namespace KSY.Tile
                 sbyte rowIndex = (sbyte)(tile.CurrentX + exploreDirX);
                 sbyte columnIndex = (sbyte)(tile.CurrentY + exploreDirY);
 
-                if(tile.Type != TileType.Wall)
+                if(tile.Type != TileObjectType.Wall)
                     GameManager.Instance.TileManager.SetObject(rowIndex, columnIndex, tile);
             }
         }

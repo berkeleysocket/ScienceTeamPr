@@ -7,79 +7,75 @@ namespace KSY.Tile
     public abstract class TileObject : MonoBehaviour
     {
         public static int TileCount = 0;
-        [field: SerializeField]public int TileID { get; private set; } = 0;
+        [field: SerializeField] public int Id { get; private set; } = -1;
 
-        public sbyte InitX
+        public int InitX
         {
             get => _initX;
             set
             {
                 if (value < 0) _initX = 0;
-                else if (value >= GameManager.Instance.MapSizeX) _initX = (sbyte)(GameManager.Instance.MapSizeX - 1);
+                else if (value >= MapManager.MapSizeX) _initX = MapManager.MapSizeX - 1;
                 else _initX = value;
             }
         }
-        private sbyte _initX;
+        private int _initX;
 
-        public sbyte InitY
+        public int InitY
         {
             get => _initY;
             set
             {
                 if (value < 0) _initY = 0;
-                else if (value >= GameManager.Instance.MapSizeY) _initY = (sbyte)(GameManager.Instance.MapSizeY - 1);
+                else if (value >= MapManager.MapSizeY) _initY = MapManager.MapSizeY - 1;
                 else _initY = value;
             }
         }
-        private sbyte _initY;
+        private int _initY;
 
-        public sbyte CurrentX
+        public int CurrentX
         {
             get => _currentX;
             set
             {
                 if (value < 0) _currentX = 0;
-                else if (value >= GameManager.Instance.MapSizeX) _currentX = (sbyte)(GameManager.Instance.MapSizeX - 1);
+                else if (value >= MapManager.MapSizeX) _currentX = MapManager.MapSizeX - 1;
                 else
                 {
                     _currentX = value;
                 }
             }
         }
-        private sbyte _currentX;
+        private int _currentX;
 
-        [field: SerializeField]
-        public sbyte CurrentY
+        public int CurrentY
         {
             get => _currentY;
             set
             {
                 if (value < 0) _currentY = 0;
-                else if (value >= GameManager.Instance.MapSizeY) _currentY = (sbyte)(GameManager.Instance.MapSizeY - 1);
+                else if (value >= MapManager.MapSizeY) _currentY = MapManager.MapSizeY - 1;
                 else _currentY = value;
             }
         }
-        private sbyte _currentY;
+        private int _currentY;
 
-        [field: SerializeField] public TileType Type { get; private set; } = TileType.None;
+        [field: SerializeField] public TileObjectType Type { get; private set; } = TileObjectType.None;
         public void InitPos()
         {
-            TileID = TileCount++;
+            Id = TileCount++;
 
             CurrentX = InitX;
             CurrentY = InitY;
         }
-        public abstract void Magnetization(sbyte xDir, sbyte yDir, TileObject presser);
-        protected virtual bool Move(sbyte xDir, sbyte yDir)
+        public abstract void Magnetization(int xDir, int yDir, TileObject presser);
+        protected virtual bool Move(int xDir, int yDir)
         {
-            int _x = CurrentX + xDir;
-            int _y = CurrentY + yDir;
-            sbyte x = (sbyte)_x;
-            sbyte y = (sbyte)_y;
-
+            int x = CurrentX + xDir;
+            int y = CurrentY + yDir;
 
             //맵의 경계를 벗어났다면 return하기.
-            if (!TileManager.InMap(x, y)) { return false; }
+            if (!MapManager.InMap(x, y)) { return false; }
 
             //해당 좌표에 다른 타일이 있는지 확인하기.
             TileObject? destinationTile = GameManager.Instance.TileManager.GetObject(x, y);
@@ -90,7 +86,7 @@ namespace KSY.Tile
                 GameManager.Instance.TileManager.SetObject(x, y, this);
             }
             //만약 타일이 있는데 벽 타일이 아니라면 자화 현상을 발동시키기.
-            else if(destinationTile.Type != TileType.Wall)
+            else if(destinationTile.Type != TileObjectType.Wall)
             {
                 destinationTile.Magnetization(xDir, yDir, this);
             }
@@ -99,15 +95,15 @@ namespace KSY.Tile
         }
     }
     #region enum
-    public enum TileType
+    public enum TileObjectType
     {
         None = 0,
-        Player,
-        MirrorPlayer,
+        Player,//플레이어
+        MirrorPlayer,//거울 플레이어
         Ferromagnetic,//강자성체
         Paramagnetic,//상자성체
         Diamagnetic,//반자성체
-        Wall
+        Wall//벽
     }
     #endregion
 }

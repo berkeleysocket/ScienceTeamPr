@@ -9,9 +9,8 @@ namespace KSY.Manager
         //SceneType은 Build Settings의 씬 순서와 맞춰야 함
         public enum SceneType : sbyte
         {
-            None = 0,
-            Ksy_MainMenu,
-            Ksy_InGame,
+            MainMenu,
+            InGame,
         }
 
         //씬 로딩 시작 이벤트
@@ -37,7 +36,7 @@ namespace KSY.Manager
         public void AddEvent_Loading(SceneType t, Action onFunction)
         {
             // None이거나 Null이면 등록하지 않음
-            if (t == SceneType.None || onFunction == null) return;
+            if (onFunction == null) return;
 
             //딕셔너리 초기화가 안되어있다면 초기화
             if (SceneLoading == null)
@@ -52,7 +51,7 @@ namespace KSY.Manager
         public void AddEvent_Loaded(SceneType t, Action onFunction)
         {
             // None이거나 Null이면 등록하지 않음
-            if (t == SceneType.None || onFunction == null) return;
+            if (onFunction == null) return;
 
             //딕셔너리 초기화가 안되어있다면 초기화
             if (SceneLoaded == null)
@@ -71,7 +70,7 @@ namespace KSY.Manager
         public void AddEvent_Exit(SceneType t, Action onFunction)
         {
             // None이거나 Null이면 등록하지 않음
-            if (t == SceneType.None || onFunction == null) return;
+            if (onFunction == null) return;
 
             //딕셔너리 초기화가 안되어있다면 초기화
             if (SceneExit == null)
@@ -88,9 +87,6 @@ namespace KSY.Manager
 
         public void LoadScene(SceneType t)
         {
-            // None이면 로드하지 않음
-            if (t == SceneType.None) return;
-
             //현재 씬에서 나가는 이벤트 실행
             if (SceneExit != null && SceneExit.ContainsKey(Scene_Current))
                 SceneExit[Scene_Current]?.Invoke();

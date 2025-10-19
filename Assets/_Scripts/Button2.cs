@@ -7,6 +7,6 @@ public class Button2 : MonoBehaviour
 
     public void OnClick()
     {
-        GameManager.Instance.StartInGame(mapIndex);
+        GameManager.Instance.StartMap(mapIndex);
     }
 }

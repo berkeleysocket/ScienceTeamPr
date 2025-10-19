@@ -1,57 +1,41 @@
+using KSY.Tile;
 using System;
 using System.Collections.Generic;
-using KSY.Tile;
-using NUnit.Framework;
-using UnityEditor.TerrainTools;
 using UnityEngine;
+using static UnityEditor.Rendering.FilterWindow;
 namespace KSY.Manager
 {
-    public struct ResultPoint
-    {
-        public sbyte X;
-        public sbyte Y;
-        public TileType Type;
-        public ResultPoint(sbyte x, sbyte y, TileType t)
-        {
-            this.X = x;
-            this.Y = y;
-            this.Type = t;
-        }
-    }
+    //public struct Destination
+    //{
+    //    //와야하는 위치
+    //    public int X;
+    //    public int Y;
+
+    //    //와야하는 타일 오브젝트 타입
+    //    public TileObjectType Type;
+    //    public Destination(int x, int y, TileObjectType t)
+    //    {
+    //        this.X = x;
+    //        this.Y = y;
+    //        this.Type = t;
+    //    }
+    //}
+
+    //인게임내의 타일 오브젝트들을 관리하는 매니저
     public class TileManager
     {
-        #region Member
-        public TileObject[,] Map;
-        public List<ResultPoint> ResultPoints = new List<ResultPoint>();
-        public void InitMap(TileObject[,] gameMap)
+        private static TileObject[,] TileMatrix;
+        private static TileObjectType[,] DestinationMatrix;
+        public static void GetMapInfo(TileObject[,] tileMatrix, TileObjectType[,] destinationMatrix)
         {
-            if (gameMap == null || gameMap.Length <= 0) return;
-            Map = gameMap;
+            TileMatrix = tileMatrix;
+            DestinationMatrix = destinationMatrix;
         }
-        public void InitTilePos()
+        public void SetNull(int rowIndex, int columIndex)
         {
-            //예외 처리
-            if (Map == null || Map.Length <= 0) return;
-
-            foreach (TileObject tile in Map)
+            if (MapManager.InMap(rowIndex, columIndex))
             {
-                if (tile == null)
-                {
-                    Debug.Log("return : 타일이 null입니다.");
-                    continue;
-                }
-
-                sbyte rowIndex = tile.InitX;
-                sbyte columnIndex = tile.InitY;
-
-                UpdatePos(rowIndex, columnIndex, tile);
-            }
-        }
-        public void SetNull(sbyte rowIndex, sbyte columIndex)
-        {
-            if (InMap(rowIndex, columIndex))
-            {
-                Map[rowIndex, columIndex] = null;
+                TileMatrix[rowIndex, columIndex] = null;
             }
             else
             {
@@ -59,27 +43,28 @@ namespace KSY.Manager
                 return;
             }
         }
-        public void SetObject(sbyte rowIndex, sbyte columnIndex, TileObject obj)
+        public void SetObject(int rowIndex, int columnIndex, TileObject obj)
         {
-            if (InMap(rowIndex,columnIndex))
+            //놓으려는 위치가 맵 안인지 확인함.
+            if (MapManager.InMap(rowIndex,columnIndex))
             {
-                if (Map[rowIndex, columnIndex] == null && obj != null)
+                if (TileMatrix[rowIndex, columnIndex] == null && obj != null)
                 {
-                    sbyte lastRowIndex = obj.CurrentX;
-                    sbyte lastColumIndex = obj.CurrentY;
+                    int lastRowIndex = obj.CurrentX;
+                    int lastColumIndex = obj.CurrentY;
 
-                    if(Map[lastRowIndex, lastColumIndex] != null && Map[lastRowIndex, lastColumIndex].TileID == obj.TileID)
+                    if(TileMatrix[lastRowIndex, lastColumIndex] != null && TileMatrix[lastRowIndex, lastColumIndex].Id == obj.Id)
                     {
-                        Map[lastRowIndex, lastColumIndex] = null;
+                        TileMatrix[lastRowIndex, lastColumIndex] = null;
                     }
 
                     obj.CurrentX = rowIndex;
                     obj.CurrentY = columnIndex;
-                    Map[rowIndex, columnIndex] = obj;
+                    TileMatrix[rowIndex, columnIndex] = obj;
 
                     UpdatePos(rowIndex, columnIndex, obj);
 
-                    CheckResultPoint();
+                    Check_AllTileArrivedDestination();
                 }
                 else if(obj == null)
                 {
@@ -98,54 +83,54 @@ namespace KSY.Manager
                 return;
             }
         }
-        public TileObject? GetObject(sbyte rowIndex, sbyte columnIndex)
+        public TileObject GetObject(int rowIndex, int columnIndex)
         {
-            TileObject? obj = Map[rowIndex, columnIndex];
+            TileObject obj = TileMatrix[rowIndex, columnIndex];
             return obj;
         }
-        #endregion
 
         #region private
-        private void UpdatePos(sbyte x, sbyte y, TileObject obj)
+        private void UpdatePos(int x, int y, TileObject obj)
         {
-            obj.transform.position = new Vector2((float)x + 0.5f, (float)y + 0.5f);
+            obj.transform.position = new Vector2(x + 0.5f, y + 0.5f);
             //Debug.Log($"<color=yellow>UpdatePos {obj.name} : ({obj.transform.position.x},{obj.transform.position.y})</color>");
         }
 
-        private void CheckResultPoint()
+        private void Check_AllTileArrivedDestination()
         {
-            sbyte SuccessCheckPoint = 0;
+            byte arrivedCount = 0;
+            byte successCount = 0;
 
-            foreach (ResultPoint element in ResultPoints)
+            for (int g = 0; g < MapManager.MapSizeX; g++)
             {
-                sbyte checkX = element.X;
-                sbyte checkY = element.Y;
-                TileType checkT = element.Type;
-
-                if (Map[checkX,checkY] != null)
-                    Debug.Log($"있어야 하는 거 {checkT} : 실제로 있는 거 {Map[checkX, checkY].Type}");
-
-                if (Map[checkX, checkY] != null && Map[checkX, checkY].Type == checkT)
+                for (int h = 0; h < MapManager.MapSizeY; h++)
                 {
-                    SuccessCheckPoint++;
-                    Debug.Log($"{ SuccessCheckPoint}");
+                    int x = g;
+                    int y = h;
+                    TileObjectType checkTileType = DestinationMatrix[x, y];
+
+                    //None일 경우 무시
+                    if (checkTileType == TileObjectType.None) return;
+
+                    //목표 카운트 up.
+                    successCount++;
+                    //if (TileMatrix[x, y] != null)
+                    //    Debug.Log($"있어야 하는 거 {checkTileType} : 실제로 있는 거 {TileMatrix[x, y].Type}");
+
+                    //실제로 객체가 존재하면서 타일 타입이 겹친다면 카운트 up.
+                    if (TileMatrix[x, y] != null && TileMatrix[x, y].Type == checkTileType)
+                    {
+                        arrivedCount++;
+                        Debug.Log($"{arrivedCount}");
+                    }
                 }
             }
 
-            if (SuccessCheckPoint == ResultPoints.Count)
+            if (arrivedCount == successCount)
             {
                 Debug.Log("<color=red>Clear!</color>");
                 GameManager.Instance.mainMenuReturn.Cleared();
             }
-        }
-        #endregion
-
-        #region static
-        //해당 좌표가 맵 안(배열)안에 있는 좌표인지 계산하는 함수
-        public static bool InMap(sbyte rowIndex, sbyte columnIndex)
-        {
-            return rowIndex >= 0 && rowIndex < GameManager.Instance.MapSizeX && 
-                columnIndex >= 0 && columnIndex < GameManager.Instance.MapSizeY;
         }
         #endregion
     }

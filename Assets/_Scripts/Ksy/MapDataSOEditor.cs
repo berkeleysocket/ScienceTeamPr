@@ -6,7 +6,7 @@ using UnityEngine;
 [Serializable]
 public class Row<T>
 {
-    public Row(sbyte colums)
+    public Row(int colums)
     {
         this.colums = new T[colums];
     }
@@ -14,9 +14,9 @@ public class Row<T>
 }
 
 [Serializable]
-public class MapData
+public class TileMatrix
 {
-    public MapData(sbyte row = 0, sbyte colums = 0)
+    public TileMatrix(int row = 0, int colums = 0)
     {
         this.rows = new Row<GameObject>[row];
 
@@ -30,32 +30,38 @@ public class MapData
 }
 
 [Serializable]
-public class TargetsData
+public class DestinationMatrix
 {
-    public TargetsData(sbyte row = 0, sbyte colums = 0)
+    public DestinationMatrix(int row = 0, int colums = 0)
     {
-        this.rows = new Row<TileType>[row];
+        this.rows = new Row<TileObjectType>[row];
 
         for (int g = 0; g < row; g++)
         {
-            this.rows[g] = new Row<TileType>(colums);
+            this.rows[g] = new Row<TileObjectType>(colums);
         }
     }
 
-    public Row<TileType>[] rows;
+    public Row<TileObjectType>[] rows;
 }
+#if UNITY_EDITOR
 [CustomEditor(typeof(MapDataSO), false)]
 public class MapDataSOEditor : Editor
 {
-    private MapDataSO reference;
-    private sbyte _mapSizeX => reference.MapSizeX;
-    private sbyte _mapSizeY => reference.MapSizeY;
-    private MapData _map => reference.Map;
-    private TargetsData _targets => reference.Targets;
+    private MapDataSO _reference;
+
+    private int _sizeX => _reference.SizeX;
+    private int _sizeY => _reference.SizeY;
+
+    private TileMatrix _tiles;
+    private DestinationMatrix _destinations;
 
     private void OnEnable()
     {
-        reference = (MapDataSO)target;
+        _reference = (MapDataSO)target;
+
+        this._tiles = _reference.tiles;
+        this._destinations = _reference.destinations;
     }
     public override void OnInspectorGUI()
     {
@@ -87,42 +93,53 @@ public class MapDataSOEditor : Editor
         //}
 
         GUILayout.Label("");
-        GUILayout.Label($"Map");
-        for (int h = 0; h < _mapSizeY; h++)
-        {
-            if (h >= _map.rows.Length)
-            {
-                Debug.LogError($"[Map] h({h}) >= rows.Length({_map.rows.Length})");
-                break;
-            }
+        GUILayout.Label($"TileMatrix");
 
-            GUILayout.BeginHorizontal();
-            for (int w = 0; w < _mapSizeX; w++)
+        if (GUILayout.Button("Create TileMatrix") && _tiles == null)
+        {
+            _tiles = new TileMatrix(_sizeX, _sizeY);
+            _destinations = new DestinationMatrix(_sizeX, _sizeY);
+        }
+        else if (_tiles != null || _destinations != null)
+        {
+            Debug.Log("tiles is not null");
+        }
+
+            for (int h = 0; h < _sizeY; h++)
             {
-                if (w >= _map.rows[h].colums.Length)
+                if (h >= _tiles.rows.Length)
                 {
-                    Debug.LogError($"[Map] w({w}) >= colums.Length({_map.rows[h].colums.Length})");
+                    Debug.LogError($"[TileMatrix] h({h}) >= rows.Length({_tiles.rows.Length})");
                     break;
                 }
 
-                GameObject field = _map.rows[h].colums[w];
-                GameObject tile = (GameObject)EditorGUILayout.ObjectField(field, typeof(GameObject), true);
-                _map.rows[h].colums[w] = tile;
+                GUILayout.BeginHorizontal();
+                for (int w = 0; w < _sizeX; w++)
+                {
+                    if (w >= _tiles.rows[h].colums.Length)
+                    {
+                        Debug.LogError($"[TileMatrix] w({w}) >= colums.Length({_tiles.rows[h].colums.Length})");
+                        break;
+                    }
+
+                    GameObject field = _tiles.rows[h].colums[w];
+                    GameObject tile = (GameObject)EditorGUILayout.ObjectField(field, typeof(GameObject), true);
+                    _tiles.rows[h].colums[w] = tile;
+                }
+                GUILayout.EndHorizontal();
             }
-            GUILayout.EndHorizontal();
-        }
 
 
         GUILayout.Label("");
         GUILayout.Label($"Targets");
-        for (int h = 0; h < _mapSizeY; h++)
+        for (int h = 0; h < _sizeY; h++)
         {
             GUILayout.BeginHorizontal();
-            for (int w = 0; w < _mapSizeX; w++)
+            for (int w = 0; w < _sizeX; w++)
             {
-                TileType field = _targets.rows[h].colums[w];
-                field = (TileType)EditorGUILayout.EnumPopup(field);
-                _targets.rows[h].colums[w] = field;
+                TileObjectType field = _destinations.rows[h].colums[w];
+                field = (TileObjectType)EditorGUILayout.EnumPopup(field);
+                _destinations.rows[h].colums[w] = field;
             }
             GUILayout.EndHorizontal();
         }
@@ -160,3 +177,4 @@ public class MapDataSOEditor : Editor
         Debug.LogError($"not Changed :");
     }
 }
+#endif
