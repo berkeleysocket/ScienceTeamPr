@@ -60,6 +60,7 @@ namespace KSY.Tile
         }
         private int _currentY;
 
+        [field: SerializeField] public AudioClip sound_Move { get; protected set; }
         [field: SerializeField] public TileObjectType Type { get; private set; } = TileObjectType.None;
         public void Init()
         {

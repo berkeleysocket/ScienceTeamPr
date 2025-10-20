@@ -20,6 +20,9 @@ namespace KSY.Manager
         public List<MapDataSO> Maps { get; private set;  } = new List<MapDataSO>();
         public MainMenuReturn mainMenuReturn;
 
+        //오디오 소스
+        public AudioSource src;
+
         //게임 시작 이벤트
         public event Action GameStarted;
 
@@ -66,6 +69,11 @@ namespace KSY.Manager
                 MapManager.Tile_Paramagnetic = Tile_Paramagnetic;
                 MapManager.Tile_Player = Tile_Player;
                 MapManager.Tile_Void = Tile_Void;
+            }
+
+            if(src == null)
+            {
+                src = gameObject.AddComponent<AudioSource>();
             }
         }
         public void StartMap(int index)

@@ -128,6 +128,7 @@ public class MapManager : MonoBehaviour
             }
         }
 
+        CurrentMapIndex = mapIndex;
         GameManager.Instance.TileManager.GetMapInfo(tilesData,destinationData);
     }
 

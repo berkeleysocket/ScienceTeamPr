@@ -1,7 +1,9 @@
+using DG.Tweening;
 using KSY.Tile;
 using System;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Rendering;
 using static UnityEditor.Rendering.FilterWindow;
 namespace KSY.Manager
 {
@@ -65,6 +67,12 @@ namespace KSY.Manager
                         TileMatrix[lastRowIndex, lastColumIndex] = null;
                     }
 
+                    if(obj.sound_Move != null)
+                    {
+                        GameManager.Instance.src.clip = obj.sound_Move;
+                        GameManager.Instance.src.Play();
+                    }
+
                     Check_AllTileArrivedDestination();
                 }
                 else if(obj == null)
@@ -93,8 +101,9 @@ namespace KSY.Manager
         #region private
         private void UpdatePos(int x, int y, TileObject obj)
         {
-            obj.transform.position = new Vector2(x + 0.5f, y + 0.5f);
-            //Debug.Log($"<color=yellow>UpdatePos {obj.name} : ({obj.transform.position.x},{obj.transform.position.y})</color>");
+            Vector2 endValue = new Vector2(x + 0.5f, y + 0.5f);
+            float duration = 0.1f;
+            obj.transform.DOMove(endValue, duration);
         }
 
         private void Check_AllTileArrivedDestination()
