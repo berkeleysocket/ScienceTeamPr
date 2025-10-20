@@ -1,5 +1,6 @@
 using UnityEngine;
 using DG.Tweening;
+using KSY.Manager;
 
 public class MainMenuReturn : MonoBehaviour
 {
@@ -10,7 +11,7 @@ public class MainMenuReturn : MonoBehaviour
     }
     public void ReturnToMainMenu()
     {
-        UnityEngine.SceneManagement.SceneManager.LoadScene("MainMenu");
+        GameManager.Instance.SceneManager.LoadScene(SceneManager.SceneType.MainMenu);
         mainMenuUI.GetComponent<RectTransform>().DOAnchorPosY(2000, 0.4f).SetEase(Ease.OutExpo);
     }
 }

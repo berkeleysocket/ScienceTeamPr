@@ -10,7 +10,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 09d5e8e8a0bdbbe44b013cb98ab279f1, type: 3}
-  m_Name: asd
+  m_Name: Stage01
   m_EditorClassIdentifier: 
   <SizeX>k__BackingField: 5
   <SizeY>k__BackingField: 5
@@ -30,14 +30,14 @@ MonoBehaviour:
       - {fileID: 0}
     - colums:
       - {fileID: 0}
+      - {fileID: 4131976481424169233, guid: abc53f43e12d8cf48b89378d26c474e5, type: 3}
       - {fileID: 0}
       - {fileID: 0}
-      - {fileID: 440502438380630699, guid: cff2634127e03f44ebe62ca6aaa7daad, type: 3}
       - {fileID: 0}
     - colums:
       - {fileID: 0}
       - {fileID: 0}
-      - {fileID: 5498425930479139280, guid: 25b524f5f3098b848a4948b1201ea512, type: 3}
+      - {fileID: 0}
       - {fileID: 0}
       - {fileID: 0}
     - colums:
@@ -48,8 +48,8 @@ MonoBehaviour:
       - {fileID: 0}
   destinations:
     rows:
-    - colums: 0100000000000000000000000000000000000000
     - colums: 0000000000000000000000000000000000000000
     - colums: 0000000000000000000000000000000000000000
+    - colums: 0000000000000000000000000000000005000000
     - colums: 0000000000000000000000000000000000000000
     - colums: 0000000000000000000000000000000000000000

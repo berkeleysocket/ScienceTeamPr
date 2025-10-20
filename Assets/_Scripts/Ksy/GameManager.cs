@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using KSY.Pattern;
+using KSY.Tile;
 using UnityEngine;
 using UnityEngine.Tilemaps;
 
@@ -32,23 +33,23 @@ namespace KSY.Manager
         {
             base.Awake();
             //GameManager Initialization
-            Init();
+            Init_Element();
         }
         private void Start()
         {
             //게임이 시작했다면 이벤트 시작
             GameStarted?.Invoke();
         }
-        private void Init()
+        private void Init_Element()
         {
+            if (SceneManager == null)
+            {
+                SceneManager = new SceneManager();
+            }
+
             if (TileManager == null)
             {
                 TileManager = new TileManager();
-            }
-
-            if(SceneManager == null)
-            {
-                SceneManager = new SceneManager();
             }
 
             if (InputManager == null)
@@ -58,7 +59,7 @@ namespace KSY.Manager
             {
                 MapManager = gameObject.AddComponent<MapManager>();
                 MapManager.TileMapCompo = gameObject.GetComponentInChildren<Tilemap>();
-                .
+
                 MapManager.Tile_Diamagnetic = Tile_Diamagnetic;
                 MapManager.Tile_Ferromagnetic = Tile_Ferromagnetic;
                 MapManager.Tile_MirrorPlayer = Tile_MirrorPlayer;
@@ -73,6 +74,8 @@ namespace KSY.Manager
             
             //인 게임 씬이 전부 로드되었다면 맵이 생성되게 이벤트 등록.
             SceneManager.AddEvent_Loaded(SceneManager.SceneType.InGame, () => MapManager.Create(index));
+            //인 게임 씬이 끝났다면 타일맵 지우게 이벤트 등록
+            SceneManager.AddEvent_Exit(SceneManager.SceneType.InGame, () => MapManager.TileMapCompo.ClearAllTiles());
 
             //인 게임 씬 로드.
             SceneManager.LoadScene(SceneManager.SceneType.InGame);

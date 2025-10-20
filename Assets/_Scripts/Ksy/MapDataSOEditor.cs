@@ -232,6 +232,12 @@ public class MapDataSOEditor : Editor
             }
         }
 
+        if (GUI.changed) // 값이 변경되면
+        {
+            EditorUtility.SetDirty(_reference); // SO를 Dirty 처리
+            AssetDatabase.SaveAssets();          // 실제 프로젝트에 저장
+        }
+
         //serializedObject : 직렬화된 오브젝트
         //Debug.Log(serializedObject.targetObject);
 

@@ -18,18 +18,21 @@ public class MapManager : MonoBehaviour
     public UnityEngine.Tilemaps.Tile Tile_Void;
 
     public Tilemap TileMapCompo;
-
     public void Create(int mapIndex)
     {
         //지정된 인덱스의 맵을 불러옴
         MapDataSO data = GameManager.Instance.Maps[mapIndex];
 
         //맵이 불러와지지 않았다면 return
+        Debug.Log($"<color=red>map data is null : {data == null}</color>");
         if (data == null) return;
 
         //맵의 사이즈를 가져옴
         int sizeX = data.SizeX;
         int sizeY = data.SizeY;
+
+        MapSizeX = sizeX;
+        MapSizeY = sizeY;
 
         //맵의 타일 배치도를 가져옴
         TileMatrix ref_tiles = data.tiles;
@@ -59,9 +62,10 @@ public class MapManager : MonoBehaviour
                     if (!tileBody.TryGetComponent(out TileObject tileSc)) return;
 
                     //타일의 초기화 위치
+                    Debug.Log($"{tileBody.name} : {initX},{initY}");
                     tileSc.InitY = initY;
                     tileSc.InitX = initX;
-                    tileSc.InitPos();
+                    tileSc.Init();
 
                     //데이터 기록
                     tilesData[initX,initY] = tileSc;
@@ -117,7 +121,6 @@ public class MapManager : MonoBehaviour
                     default:
                         {
                             TileMapCompo.SetTile(new Vector3Int(x, y), Tile_Void);
-
                             break;
                         }
 
@@ -125,7 +128,7 @@ public class MapManager : MonoBehaviour
             }
         }
 
-        TileManager.GetMapInfo(tilesData,destinationData);
+        GameManager.Instance.TileManager.GetMapInfo(tilesData,destinationData);
     }
 
  #region static

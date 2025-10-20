@@ -61,16 +61,19 @@ namespace KSY.Tile
         private int _currentY;
 
         [field: SerializeField] public TileObjectType Type { get; private set; } = TileObjectType.None;
-        public void InitPos()
+        public void Init()
         {
             Id = TileCount++;
 
             CurrentX = InitX;
             CurrentY = InitY;
+
+            gameObject.transform.position = new Vector2(InitX + 0.5f, InitY + 0.5f);
         }
         public abstract void Magnetization(int xDir, int yDir, TileObject presser);
         protected virtual bool Move(int xDir, int yDir)
         {
+            //Debug.Log($"{gameObject.name} : {CurrentX},{CurrentY}");
             int x = CurrentX + xDir;
             int y = CurrentY + yDir;
 

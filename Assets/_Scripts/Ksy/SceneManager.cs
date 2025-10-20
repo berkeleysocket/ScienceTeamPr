@@ -81,15 +81,12 @@ namespace KSY.Manager
                 SceneExit[t] += onFunction;
             else
                 SceneExit.Add(t, onFunction);
-
-            UnityEngine.Debug.Log("asdasdasdsdd");
         }
 
         public void LoadScene(SceneType t)
         {
             //현재 씬에서 나가는 이벤트 실행
-            if (SceneExit != null && SceneExit.ContainsKey(Scene_Current))
-                SceneExit[Scene_Current]?.Invoke();
+            Handle_SceneExit();
 
             //씬 로딩 이벤트 실행
             if (SceneLoading != null && SceneLoading.ContainsKey(t))
@@ -111,6 +108,25 @@ namespace KSY.Manager
             {
                 UnityEngine.Debug.Log($"{Scene_Current}");
                 SceneLoaded[Scene_Current]?.Invoke();
+
+                //쌓인 이벤트 실행후 해제
+                SceneLoaded[Scene_Current] = null;
+
+                //이벤트 해제
+                UnityEngine.SceneManagement.SceneManager.sceneLoaded -= Handle_SceneLoaded;
+            }
+        }
+
+        private void Handle_SceneExit()
+        {
+            //씬 로드 완료 이벤트 실행
+            if (SceneExit != null && SceneExit.ContainsKey(Scene_Current))
+            {
+                UnityEngine.Debug.Log($"{Scene_Current}");
+                SceneExit[Scene_Current]?.Invoke();
+
+                //쌓인 이벤트 실행후 해제
+                SceneExit[Scene_Current] = null;
 
                 //이벤트 해제
                 UnityEngine.SceneManagement.SceneManager.sceneLoaded -= Handle_SceneLoaded;

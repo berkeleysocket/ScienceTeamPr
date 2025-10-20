@@ -24,9 +24,9 @@ namespace KSY.Manager
     //인게임내의 타일 오브젝트들을 관리하는 매니저
     public class TileManager
     {
-        private static TileObject[,] TileMatrix;
-        private static TileObjectType[,] DestinationMatrix;
-        public static void GetMapInfo(TileObject[,] tileMatrix, TileObjectType[,] destinationMatrix)
+        public TileObject[,] TileMatrix;
+        public TileObjectType[,] DestinationMatrix;
+        public void GetMapInfo(TileObject[,] tileMatrix, TileObjectType[,] destinationMatrix)
         {
             TileMatrix = tileMatrix;
             DestinationMatrix = destinationMatrix;
@@ -53,16 +53,17 @@ namespace KSY.Manager
                     int lastRowIndex = obj.CurrentX;
                     int lastColumIndex = obj.CurrentY;
 
-                    if(TileMatrix[lastRowIndex, lastColumIndex] != null && TileMatrix[lastRowIndex, lastColumIndex].Id == obj.Id)
-                    {
-                        TileMatrix[lastRowIndex, lastColumIndex] = null;
-                    }
-
                     obj.CurrentX = rowIndex;
                     obj.CurrentY = columnIndex;
+
                     TileMatrix[rowIndex, columnIndex] = obj;
 
                     UpdatePos(rowIndex, columnIndex, obj);
+
+                    if (TileMatrix[lastRowIndex, lastColumIndex] != null && TileMatrix[lastRowIndex, lastColumIndex].Id == obj.Id)
+                    {
+                        TileMatrix[lastRowIndex, lastColumIndex] = null;
+                    }
 
                     Check_AllTileArrivedDestination();
                 }
@@ -109,8 +110,9 @@ namespace KSY.Manager
                     int y = h;
                     TileObjectType checkTileType = DestinationMatrix[x, y];
 
+                    Debug.Log(checkTileType);
                     //None일 경우 무시
-                    if (checkTileType == TileObjectType.None) return;
+                    if (checkTileType == TileObjectType.None || checkTileType == TileObjectType.Wall) continue;
 
                     //목표 카운트 up.
                     successCount++;
