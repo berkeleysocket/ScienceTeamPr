@@ -17,6 +17,10 @@ public class MapManager : MonoBehaviour
     public UnityEngine.Tilemaps.Tile Tile_Player;
     public UnityEngine.Tilemaps.Tile Tile_Void;
 
+    public UnityEngine.Tilemaps.Tile HardTile_Diamagnetic;
+    public UnityEngine.Tilemaps.Tile HardTile_Ferromagnetic;
+    public UnityEngine.Tilemaps.Tile HardTile_Paramagnetic;
+
     public Tilemap TileMapCompo;
     public void Create(int mapIndex)
     {
@@ -95,11 +99,21 @@ public class MapManager : MonoBehaviour
                 {
                     case TileObjectType.Diamagnetic:
                         {
+                            if(GameManager.IsHardMode)
+                            {
+                                TileMapCompo.SetTile(new Vector3Int(x, y), HardTile_Diamagnetic);
+                                break;
+                            }
                             TileMapCompo.SetTile(new Vector3Int(x, y), Tile_Diamagnetic);
                             break;
                         }
                     case TileObjectType.Ferromagnetic:
                         {
+                            if (GameManager.IsHardMode)
+                            {
+                                TileMapCompo.SetTile(new Vector3Int(x, y), HardTile_Ferromagnetic);
+                                break;
+                            }
                             TileMapCompo.SetTile(new Vector3Int(x, y), Tile_Ferromagnetic);
                             break;
                         }
@@ -110,6 +124,11 @@ public class MapManager : MonoBehaviour
                         }
                     case TileObjectType.Paramagnetic:
                         {
+                            if (GameManager.IsHardMode)
+                            {
+                                TileMapCompo.SetTile(new Vector3Int(x, y), HardTile_Paramagnetic);
+                                break;
+                            }
                             TileMapCompo.SetTile(new Vector3Int(x, y), Tile_Paramagnetic);
                             break;
                         }

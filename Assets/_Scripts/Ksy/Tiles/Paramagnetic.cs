@@ -6,6 +6,8 @@ namespace KSY.Tile
     {
         public override void Magnetization(int xDir, int yDir, TileObject presser)
         {
+            base.Magnetization(xDir, yDir, presser);
+
             int myTX = CurrentX;
             int myTY = CurrentY;
             int otherTX = presser.CurrentX;

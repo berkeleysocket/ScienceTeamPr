@@ -2,8 +2,10 @@ using System;
 using System.Collections.Generic;
 using KSY.Pattern;
 using KSY.Tile;
+using TMPro;
 using UnityEngine;
 using UnityEngine.Tilemaps;
+using UnityEngine.UI;
 
 namespace KSY.Manager
 {
@@ -16,12 +18,40 @@ namespace KSY.Manager
         public UnityEngine.Tilemaps.Tile Tile_Player;
         public UnityEngine.Tilemaps.Tile Tile_Void;
 
+        public UnityEngine.Tilemaps.Tile HardTile_Diamagnetic;
+        public UnityEngine.Tilemaps.Tile HardTile_Ferromagnetic;
+        public UnityEngine.Tilemaps.Tile HardTile_Paramagnetic;
+
         [field: SerializeField]
         public List<MapDataSO> Maps { get; private set;  } = new List<MapDataSO>();
         public MainMenuReturn mainMenuReturn;
 
         //오디오 소스
         public AudioSource src;
+
+        public static bool IsHardMode = false;
+        public void OnHardMode()
+        {
+            GameObject hardModeBtn = GameObject.Find("Canvas/TitleMenu/Btn_AllLevel");
+
+            TextMeshProUGUI text = hardModeBtn.GetComponentInChildren<TextMeshProUGUI>();
+
+            if (!IsHardMode)
+            {
+                text.text = "Hard";
+                hardModeBtn.GetComponent<Image>().color = Color.red;
+                text.color = Color.white;
+            }
+            else if (IsHardMode)
+            {
+                text.text = "Normal";
+                hardModeBtn.GetComponent<Image>().color = Color.white;
+                text.color = Color.black;
+            }
+
+            IsHardMode = !IsHardMode;
+            Debug.Log($"IsHardMode : {IsHardMode}");
+        }
 
         //게임 시작 이벤트
         public event Action GameStarted;
@@ -69,9 +99,13 @@ namespace KSY.Manager
                 MapManager.Tile_Paramagnetic = Tile_Paramagnetic;
                 MapManager.Tile_Player = Tile_Player;
                 MapManager.Tile_Void = Tile_Void;
+
+                MapManager.HardTile_Diamagnetic = HardTile_Diamagnetic;
+                MapManager.HardTile_Ferromagnetic = HardTile_Ferromagnetic;
+                MapManager.HardTile_Paramagnetic = HardTile_Paramagnetic;
             }
 
-            if(src == null)
+            if (src == null)
             {
                 src = gameObject.AddComponent<AudioSource>();
             }

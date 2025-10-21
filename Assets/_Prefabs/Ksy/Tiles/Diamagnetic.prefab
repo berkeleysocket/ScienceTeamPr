@@ -77,8 +77,8 @@ SpriteRenderer:
   m_SortingLayerID: 320417661
   m_SortingLayer: 2
   m_SortingOrder: 0
-  m_Sprite: {fileID: 7482667652216324306, guid: 311925a002f4447b3a28927169b83ea6, type: 3}
-  m_Color: {r: 0.90876615, g: 1, b: 0, a: 1}
+  m_Sprite: {fileID: -6002856396487572967, guid: 248be1f9937510443b73b75e8670667c, type: 3}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
@@ -100,5 +100,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 337d41494f725544b9749d4fd644dbac, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  <TileID>k__BackingField: 0
+  <Id>k__BackingField: -1
+  <HardImages>k__BackingField:
+  - {fileID: 6838763873453554004, guid: 59dac9ce5290ac04fa99e3f443aca23f, type: 3}
+  - {fileID: -8178000554316334385, guid: 7e7e6dffff3a9f74b858a05cc468a928, type: 3}
+  <Sound_Move>k__BackingField: {fileID: 0}
+  <Sound_Magnization>k__BackingField: {fileID: 0}
   <Type>k__BackingField: 5

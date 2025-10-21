@@ -7,6 +7,8 @@ namespace KSY.Tile
     {
         public override void Magnetization(int xDir, int yDir, TileObject presser)
         {
+            base.Magnetization(xDir, yDir, presser);
+
             //탐색 방향 계산
             int exploreDirX = -xDir;
             int exploreDirY = -yDir;

@@ -11,6 +11,8 @@ GameObject:
   - component: {fileID: 4126021602337795539}
   - component: {fileID: 6355722682973695284}
   - component: {fileID: 356670673963221870}
+  - component: {fileID: 4853461738290191}
+  - component: {fileID: 5732217160634102460}
   m_Layer: 0
   m_Name: Ferromagnetic
   m_TagString: Untagged
@@ -18,21 +20,25 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!4 &4126021602337795539
-Transform:
+--- !u!224 &4126021602337795539
+RectTransform:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5498425930479139280}
-  serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0.5, y: 0.5, z: 0}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 0.5, y: 0.5, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_AnchorMin: {x: 0.5, y: 0.5}
+  m_AnchorMax: {x: 0.5, y: 0.5}
+  m_AnchoredPosition: {x: 0.5, y: 0.5}
+  m_SizeDelta: {x: 1, y: 1}
+  m_Pivot: {x: 0.5, y: 0.5}
 --- !u!212 &6355722682973695284
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -77,8 +83,8 @@ SpriteRenderer:
   m_SortingLayerID: 320417661
   m_SortingLayer: 2
   m_SortingOrder: 0
-  m_Sprite: {fileID: 7482667652216324306, guid: 311925a002f4447b3a28927169b83ea6, type: 3}
-  m_Color: {r: 1, g: 0, b: 0, a: 1}
+  m_Sprite: {fileID: 1609202523423018803, guid: 17fad874861ff324c83589cc6e9c67fa, type: 3}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
@@ -100,5 +106,52 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1a67256f8f78cca4087e0803e1cbd447, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  <TileID>k__BackingField: 0
+  <Id>k__BackingField: -1
+  <HardImages>k__BackingField:
+  - {fileID: 3798089867757232962, guid: 762b8d5917d2f4b4dbae3823a8404963, type: 3}
+  - {fileID: 4045815044029904174, guid: 96931bc77c14879449a6c4a62feacb2f, type: 3}
+  <Sound_Move>k__BackingField: {fileID: 0}
+  <Sound_Magnization>k__BackingField: {fileID: 0}
   <Type>k__BackingField: 3
+--- !u!222 &4853461738290191
+CanvasRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5498425930479139280}
+  m_CullTransparentMesh: 1
+--- !u!114 &5732217160634102460
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5498425930479139280}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5f7201a12d95ffc409449d95f23cf332, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Material: {fileID: 0}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_RaycastTarget: 1
+  m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
+  m_Maskable: 1
+  m_OnCullStateChanged:
+    m_PersistentCalls:
+      m_Calls: []
+  m_FontData:
+    m_Font: {fileID: 10102, guid: 0000000000000000e000000000000000, type: 0}
+    m_FontSize: 14
+    m_FontStyle: 0
+    m_BestFit: 0
+    m_MinSize: 10
+    m_MaxSize: 40
+    m_Alignment: 0
+    m_AlignByGeometry: 0
+    m_RichText: 1
+    m_HorizontalOverflow: 0
+    m_VerticalOverflow: 0
+    m_LineSpacing: 1
+  m_Text: 

@@ -1,6 +1,7 @@
 using System.ComponentModel;
 using KSY.Manager;
 using UnityEngine;
+using UnityEngine.Rendering;
 
 namespace KSY.Tile
 {
@@ -60,10 +61,21 @@ namespace KSY.Tile
         }
         private int _currentY;
 
-        [field: SerializeField] public AudioClip sound_Move { get; protected set; }
+        [field: SerializeField] public Sprite[] HardImages { get; protected set; }
+        [field: SerializeField] public AudioClip Sound_Move { get; protected set; }
+        [field: SerializeField] public AudioClip Sound_Magnization { get; protected set; }
         [field: SerializeField] public TileObjectType Type { get; private set; } = TileObjectType.None;
         public void Init()
         {
+            if(GameManager.IsHardMode && HardImages != null && HardImages.Length != 0)
+            {
+                int index = Random.Range(0, HardImages.Length);
+                //int clampIndex = Mathf.Clamp(index, 0, HardImages.Length - 1);
+                Debug.Log($"{gameObject.name}, HardImages is null : {HardImages == null}, HardImages's index element :  {index}");
+                if (HardImages[index] == null) return;
+                GetComponent<SpriteRenderer>().sprite = HardImages[index];
+            }
+
             Id = TileCount++;
 
             CurrentX = InitX;
@@ -71,10 +83,13 @@ namespace KSY.Tile
 
             gameObject.transform.position = new Vector2(InitX + 0.5f, InitY + 0.5f);
         }
-        public abstract void Magnetization(int xDir, int yDir, TileObject presser);
+        public virtual void Magnetization(int xDir, int yDir, TileObject presser)
+        {
+            Debug.Log("Magnetization Sound");
+            GameManager.Instance.src.PlayOneShot(Sound_Magnization);
+        }
         protected virtual bool Move(int xDir, int yDir)
         {
-            //Debug.Log($"{gameObject.name} : {CurrentX},{CurrentY}");
             int x = CurrentX + xDir;
             int y = CurrentY + yDir;
 

@@ -67,9 +67,9 @@ namespace KSY.Manager
                         TileMatrix[lastRowIndex, lastColumIndex] = null;
                     }
 
-                    if(obj.sound_Move != null)
+                    if(obj.Sound_Move != null)
                     {
-                        GameManager.Instance.src.clip = obj.sound_Move;
+                        GameManager.Instance.src.clip = obj.Sound_Move;
                         GameManager.Instance.src.Play();
                     }
 
@@ -119,7 +119,6 @@ namespace KSY.Manager
                     int y = h;
                     TileObjectType checkTileType = DestinationMatrix[x, y];
 
-                    Debug.Log(checkTileType);
                     //None일 경우 무시
                     if (checkTileType == TileObjectType.None || checkTileType == TileObjectType.Wall) continue;
 
