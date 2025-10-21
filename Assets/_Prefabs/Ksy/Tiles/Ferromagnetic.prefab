@@ -111,7 +111,7 @@ MonoBehaviour:
   - {fileID: 3798089867757232962, guid: 762b8d5917d2f4b4dbae3823a8404963, type: 3}
   - {fileID: 4045815044029904174, guid: 96931bc77c14879449a6c4a62feacb2f, type: 3}
   <Sound_Move>k__BackingField: {fileID: 0}
-  <Sound_Magnization>k__BackingField: {fileID: 0}
+  <Sound_Magnization>k__BackingField: {fileID: 8300000, guid: 662839c9ae00a9849b7863a418532d3f, type: 3}
   <Type>k__BackingField: 3
 --- !u!222 &4853461738290191
 CanvasRenderer:

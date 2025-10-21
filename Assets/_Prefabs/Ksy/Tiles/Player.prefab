@@ -103,10 +103,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   <Id>k__BackingField: -1
   <HardImages>k__BackingField: []
-  <Sound_Move>k__BackingField: {fileID: 0}
+  <Sound_Move>k__BackingField: {fileID: 8300000, guid: 7a3c31f0728b35a44869d19b3e4346b2, type: 3}
   <Sound_Magnization>k__BackingField: {fileID: 0}
   <Type>k__BackingField: 1
-  cam: {fileID: 4090290894079013421}
 --- !u!1 &7553670359980940990
 GameObject:
   m_ObjectHideFlags: 0
@@ -117,7 +116,6 @@ GameObject:
   m_Component:
   - component: {fileID: 4036993712203898269}
   - component: {fileID: 4090290894079013421}
-  - component: {fileID: 1429624681704284416}
   m_Layer: 0
   m_Name: PlayerCam
   m_TagString: Untagged
@@ -184,25 +182,6 @@ MonoBehaviour:
       BarrelClipping: 0.25
       Anamorphism: 0
   BlendHint: 0
---- !u!114 &1429624681704284416
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7553670359980940990}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b617507da6d07e749b7efdb34e1173e1, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  TrackerSettings:
-    BindingMode: 4
-    PositionDamping: {x: 1, y: 1, z: 1}
-    AngularDampingMode: 0
-    RotationDamping: {x: 1, y: 1, z: 1}
-    QuaternionDamping: 1
-  FollowOffset: {x: 0, y: 0, z: -10}
 --- !u!1 &8571544227868406694
 GameObject:
   m_ObjectHideFlags: 0

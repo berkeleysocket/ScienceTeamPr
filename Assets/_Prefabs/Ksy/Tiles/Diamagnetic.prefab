@@ -105,5 +105,5 @@ MonoBehaviour:
   - {fileID: 6838763873453554004, guid: 59dac9ce5290ac04fa99e3f443aca23f, type: 3}
   - {fileID: -8178000554316334385, guid: 7e7e6dffff3a9f74b858a05cc468a928, type: 3}
   <Sound_Move>k__BackingField: {fileID: 0}
-  <Sound_Magnization>k__BackingField: {fileID: 0}
+  <Sound_Magnization>k__BackingField: {fileID: 8300000, guid: 662839c9ae00a9849b7863a418532d3f, type: 3}
   <Type>k__BackingField: 5
