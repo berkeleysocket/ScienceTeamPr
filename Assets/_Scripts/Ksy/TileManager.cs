@@ -1,10 +1,8 @@
 using DG.Tweening;
 using KSY.Tile;
-using System;
-using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.Rendering;
-using static UnityEditor.Rendering.FilterWindow;
+
+
 namespace KSY.Manager
 {
     //public struct Destination
