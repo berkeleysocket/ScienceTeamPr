@@ -134,7 +134,8 @@ TextureImporter:
     secondaryTextures: []
     spriteCustomMetadata:
       entries: []
-    nameFileIdTable: {}
+    nameFileIdTable:
+      Hard_Paramagnetic_0: 1651630593134287713
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

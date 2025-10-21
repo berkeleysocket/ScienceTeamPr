@@ -134,7 +134,8 @@ TextureImporter:
     secondaryTextures: []
     spriteCustomMetadata:
       entries: []
-    nameFileIdTable: {}
+    nameFileIdTable:
+      Hard_Ferromagnetic_0: 3798089867757232962
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 
